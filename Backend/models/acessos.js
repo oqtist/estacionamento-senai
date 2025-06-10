@@ -1,5 +1,5 @@
 import { database } from "../database.js";
-import { DataTypes } from "sequelize";
+import { DataTypes, Sequelize } from "sequelize";
 import { Veiculos } from "./veiculos.js";
 
 const Acessos = database.define(
@@ -12,12 +12,11 @@ const Acessos = database.define(
             autoIncrementIdentity: true
         },
         data_entrada: {
-            type: DataTypes.TIME,
-            defaultValue: DataTypes.NOW
+            type: DataTypes.DATE,
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
         data_saida: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
+            type: DataTypes.DATE
         }
     }, {
     schema: 'estacionamento',

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { Usuario } from '../models/users.js'
 const segredoJwt = process.env.SEGREDO_JWT
 
-const cadastroUsuario = async (req, res) => {
+export const cadastroUsuario = async (req, res) => {
     try {
         const { nome, tipo, senha, email } = req.body
         const userCheck = await Usuario.findOne({ where: { email } })
@@ -25,13 +25,11 @@ const cadastroUsuario = async (req, res) => {
     }
 }
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
     try {
         const { email, senha } = req.body
         const emailCheck = await Usuario.findOne({ where: { email: email } })
         const senhaCheck = await Usuario.findOne({ where: { senha: senha } })
-
-        console.log(emailCheck)
 
         if (!emailCheck) {
             res.status(500).send({ mensagem: `${email} não encontrado. Tente outro e-mail ou registre-se.` })
@@ -48,7 +46,7 @@ const login = async (req, res) => {
     }
 }
 
-const atualizarUsuario = async (req, res) => {
+export const atualizarUsuario = async (req, res) => {
     try {
         const { nome, tipo, email, senha } = req.body
 
@@ -82,7 +80,7 @@ const atualizarUsuario = async (req, res) => {
     }
 }
 
-const destruirUsuario = async (req, res) => {
+export const destruirUsuario = async (req, res) => {
     try {
         const userCheck = await res.locals.user
 
@@ -97,5 +95,3 @@ const destruirUsuario = async (req, res) => {
         console.log(err)
     }
 }
-
-export { cadastroUsuario, login, atualizarUsuario, destruirUsuario }

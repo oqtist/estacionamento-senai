@@ -19,6 +19,13 @@ const Veiculos = database.define(
         modelo: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        cor: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        imagem: {
+            type: DataTypes.STRING
         }
     }, {
     schema: 'estacionamento',
