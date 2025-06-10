@@ -1,4 +1,6 @@
+import { Sequelize } from 'sequelize'
 import { Veiculos } from '../models/veiculos.js'
+import { database } from '../database.js'
 
 export const cadastroVeiculo = async (req, res) => {
     try {
@@ -66,7 +68,6 @@ export const atualizarVeiculo = async (req, res) => {
 
 export const destruirVeiculo = async (req, res) => {
     try {
-        const { placa } = req.body
         const id = req.params.id
 
         const userCheck = await res.locals.user
