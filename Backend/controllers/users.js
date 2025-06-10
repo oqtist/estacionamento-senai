@@ -1,11 +1,14 @@
 import jwt from 'jsonwebtoken'
 import { Usuario } from '../models/users.js'
+import bcrypt from 'bcrypt'
 const segredoJwt = process.env.SEGREDO_JWT
 
 export const cadastroUsuario = async (req, res) => {
     try {
-        const { nome, tipo, senha, email } = req.body
+        const { nome, senha, tipo, email } = req.body
+        const saltRounds = 10
         const userCheck = await Usuario.findOne({ where: { email } })
+
 
         if (!nome || !tipo || !senha || !email) {
             res.status(500).send({ mensagem: 'Um dos campos não foi preenchido. Tente Novamente.' })
@@ -16,8 +19,11 @@ export const cadastroUsuario = async (req, res) => {
             return
         }
 
-        const usuario = await Usuario.create({ nome, senha, email, tipo })
-        res.status(200).send({ mensagem: 'Usuário Cadastrado!', data: usuario })
+        bcrypt.hash(senha, saltRounds).then(function (hash) {
+            Usuario.create({ nome, senha: hash, email, tipo })
+        });
+
+        res.status(200).send({ mensagem: 'Usuário Cadastrado!' })
     }
     catch (err) {
         console.log(err)
@@ -29,18 +35,20 @@ export const login = async (req, res) => {
     try {
         const { email, senha } = req.body
         const emailCheck = await Usuario.findOne({ where: { email: email } })
-        const senhaCheck = await Usuario.findOne({ where: { senha: senha } })
+        const hash = emailCheck.dataValues.senha
 
         if (!emailCheck) {
             res.status(500).send({ mensagem: `${email} não encontrado. Tente outro e-mail ou registre-se.` })
             return
         }
-        if (!senhaCheck) {
-            res.status(500).send({ mensagem: `Senha Incorreta. Tente novamente.` })
-            return
-        }
-        const token = jwt.sign({ idUsuario: emailCheck.dataValues.id_usuario }, segredoJwt, { expiresIn: "1d" })
-        res.status(201).send({ token: token })
+        bcrypt.compare(senha, hash, function (err, result) {
+            if (!result) {
+                res.status(500).send('Senha Incorreta. Tente Novamente.')
+            } else {
+                const token = jwt.sign({ idUsuario: emailCheck.dataValues.id_usuario }, segredoJwt, { expiresIn: "1d" })
+                res.status(201).send({ token: token })
+            }
+        });
     } catch (err) {
         console.log(err)
     }
@@ -49,6 +57,7 @@ export const login = async (req, res) => {
 export const atualizarUsuario = async (req, res) => {
     try {
         const { nome, tipo, email, senha } = req.body
+        const saltRounds = 10
 
         const userCheck = await res.locals.user
         if (userCheck) {
@@ -62,7 +71,8 @@ export const atualizarUsuario = async (req, res) => {
                 userCheck.email = email
             }
             if (senha) {
-                userCheck.senha = senha
+                const hash = await bcrypt.hash(senha, saltRounds)
+                userCheck.senha = hash
             }
 
             if (nome || tipo || email || senha) {
