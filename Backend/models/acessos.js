@@ -3,7 +3,7 @@ import { DataTypes, Sequelize } from "sequelize";
 import { Veiculos } from "./veiculos.js";
 
 const Acessos = database.define(
-    'Acessos',
+    'acessos',
     {
         id_acesso: {
             type: DataTypes.SMALLINT,

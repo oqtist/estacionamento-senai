@@ -2,7 +2,7 @@ import { database } from "../database.js";
 import { DataTypes } from "sequelize";
 
 const Usuario = database.define(
-    'Usuario',
+    'usuario',
     {
         id_usuario: {
             type: DataTypes.SMALLINT,

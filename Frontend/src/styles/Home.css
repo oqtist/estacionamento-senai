@@ -1,0 +1,71 @@
+header {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100vw;
+  background-color: #0E6654;
+  border-bottom: 3px solid #CEFFF5;
+  z-index: 2;
+}
+
+#sub-header-selector {
+  justify-content: space-around;
+  width: 100vw;
+  padding-block: 2%;
+  position: absolute;
+  display: flex;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  transition: 500ms;
+  background-color: #CEFFF5;
+  color: transparent;
+}
+
+#sub-header-selector:hover {
+  top: 19vh;
+  transition: 250ms;
+  color: white;
+}
+
+#puller-thingy {
+  position: absolute;
+  top: 0vh;
+  padding: 3%;
+  padding-top: 9%;
+  width: 94%;
+  color: transparent;
+  user-select: none;
+  z-index: 0;
+}
+
+#puller-thingy:hover {
+  color: transparent;
+}
+
+.link-header {
+  color: #59BBA7;
+  z-index: 10;
+  transition: 100ms;
+}
+
+.link-header:hover {
+  transition: 300ms;
+  color: #665E43;
+  filter: drop-shadow(3px 0 1px #E6D293) drop-shadow(-3px 0 1px #E6D293);
+}
+
+.link-below-header {
+  color: #93E6D5;
+}
+
+.link-below-header:hover {
+  transition: 300ms;
+  color: #E6D293;
+  filter: drop-shadow(3px 0 1px #665E43) drop-shadow(-3px 0 1px #665E43);
+}
+
+/* Color Palette:
+  #0E6654 (monochromatic base)
+  #1D213C
+  */

@@ -4,7 +4,7 @@ import { Usuario } from "./users.js";
 import { Acessos } from "./acessos.js";
 
 const Veiculos = database.define(
-    'Veiculos',
+    'veiculos',
     {
         id_veiculo: {
             type: DataTypes.SMALLINT,
