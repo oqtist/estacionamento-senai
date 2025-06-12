@@ -5,7 +5,7 @@ import axios from 'axios'
 
 function Home() {
 
-  const a = "b" //para eventual função login
+  const token = localStorage.getItem('token')
 
   return (
     <>
@@ -13,13 +13,23 @@ function Home() {
         <h1>Sistema de Estacionamento</h1>
       </header>
       <div id='sub-header-selector'>
-        <Link className='link-header' id='registro-link' to="/registro">Registro</Link>
-        <Link className='link-header' id='login-link' to="/login">Login</Link>
-        {a == "a" && (<Link className='link-header' id='perfil-link' to="/perfil">Perfil</Link>)}
+        {token ?
+          <>
+            (<Link className='link-header' id='perfil-link' to="/perfil">Perfil</Link>)
+            (<Link className='link-header' id='perfil-link' onClick={() => {
+              localStorage.removeItem('token')
+              window.location.reload()
+            }}>Sair</Link>)
+          </>
+          :
+          <>
+            <Link className='link-header' id='registro-link' to="/registro">Registro</Link>
+            <Link className='link-header' id='login-link' to="/login">Login</Link>
+          </>}
         <a id='puller-thingy'>▼</a>
       </div>
-      {a == "a" ? (<></>) : (<>
-        <p>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta. 
+      {token ? (<></>) : (<>
+        <p>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta.
         </p>
       </>)}
     </>

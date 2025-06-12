@@ -45,7 +45,7 @@ export const login = async (req, res) => {
                     res.status(500).send('Senha Incorreta. Tente Novamente.')
                 } else {
                     const token = jwt.sign({ idUsuario: emailCheck.dataValues.id_usuario }, segredoJwt, { expiresIn: "1d" })
-                    res.status(201).send({ token: token })
+                    res.status(201).send({ token: token, nomeUsuario: emailCheck.nome })
                 }
             });
         }
