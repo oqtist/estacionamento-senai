@@ -9,7 +9,6 @@ export const cadastroUsuario = async (req, res) => {
         const saltRounds = 10
         const userCheck = await Usuario.findOne({ where: { email } })
 
-
         if (!nome || !tipo || !senha || !email) {
             res.status(500).send({ mensagem: 'Um dos campos não foi preenchido. Tente Novamente.' })
             return
@@ -35,20 +34,21 @@ export const login = async (req, res) => {
     try {
         const { email, senha } = req.body
         const emailCheck = await Usuario.findOne({ where: { email: email } })
-        const hash = emailCheck.dataValues.senha
 
         if (!emailCheck) {
             res.status(500).send({ mensagem: `${email} não encontrado. Tente outro e-mail ou registre-se.` })
             return
+        } else {
+            const hash = emailCheck.dataValues.senha
+            bcrypt.compare(senha, hash, function (err, result) {
+                if (!result) {
+                    res.status(500).send('Senha Incorreta. Tente Novamente.')
+                } else {
+                    const token = jwt.sign({ idUsuario: emailCheck.dataValues.id_usuario }, segredoJwt, { expiresIn: "1d" })
+                    res.status(201).send({ token: token })
+                }
+            });
         }
-        bcrypt.compare(senha, hash, function (err, result) {
-            if (!result) {
-                res.status(500).send('Senha Incorreta. Tente Novamente.')
-            } else {
-                const token = jwt.sign({ idUsuario: emailCheck.dataValues.id_usuario }, segredoJwt, { expiresIn: "1d" })
-                res.status(201).send({ token: token })
-            }
-        });
     } catch (err) {
         console.log(err)
     }
