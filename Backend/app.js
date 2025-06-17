@@ -15,11 +15,11 @@ app.use(cors())
 app.use(express.json())
 app.use(routerUser, routerVeiculos, routerAcesso)
 
-// try {
-//     await database.sync({ force: true })
-// } catch (err) {
-//     console.log(err)
-// }
+ try {
+     await database.sync({ force: true })
+ } catch (err) {
+     console.log(err)
+ }
 
 app.listen(3000, () => {
     console.log('Servidor Iniciado na porta 3000.')
