@@ -7,6 +7,7 @@ import Home from './components/Home.jsx'
 import Login from './components/Login.jsx'
 import Perfil from './components/Perfil.jsx'
 import Registro from './components/Registro.jsx'
+import CadastroVeiculo from './components/CadastroVeiculo.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/registro',
     element: <Registro />
+  },
+  {
+    path: '/cadastro-veiculo',
+    element: <CadastroVeiculo />
   }
 ])
 

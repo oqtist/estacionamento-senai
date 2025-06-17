@@ -18,7 +18,9 @@ function Login() {
       })
       console.log(response)
       localStorage.setItem('token', response.data.token)
-      navigate(-1)
+      navigate({
+        pathname: "/"
+      })
 
     } catch (err) {
       alert(err.response.data.mensagem)

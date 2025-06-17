@@ -19,7 +19,9 @@ function Registro() {
         nome, tipo, email, senha
       })
       alert('Usuário Cadastrado!')
-      navigate(-1)
+      navigate({
+        pathname: "/login"
+      })
     } catch (err) {
       alert(err.response.data.mensagem)
       console.log(err)

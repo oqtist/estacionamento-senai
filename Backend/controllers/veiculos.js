@@ -87,3 +87,18 @@ export const destruirVeiculo = async (req, res) => {
         console.log(err)
     }
 }
+
+export const listarVeiculos = async (req, res) => {
+    try{
+        const veiculos = await Veiculos.findAll()
+        
+        if(!veiculos) {
+            res.status(500).send('Nenhum veículo encontrado.')
+            return
+        }
+        res.status(200).send({veiculos: veiculos})
+
+    } catch(err) {
+        console.log(err)
+    }
+}

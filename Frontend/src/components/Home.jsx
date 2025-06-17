@@ -1,11 +1,30 @@
 import '../styles/Home.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { useEffect } from 'react'
 
 
 function Home() {
 
   const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    fetchVeiculos()
+  }, [])
+
+  async function fetchTarefas() {
+    try {
+        const response = await axios.get('https://desenvolvimento-de-sistema-25-01.onrender.com/tarefas', {
+            headers: {
+                Authorization: token
+            }
+        })
+        setTarefas(response.data.tarefas)
+    } catch (err) {
+        logout()
+        console.log(err)
+    }
+  }
 
   return (
     <>
@@ -26,9 +45,13 @@ function Home() {
             <Link className='link-header' id='registro-link' to="/registro">Registro</Link>
             <Link className='link-header' id='login-link' to="/login">Login</Link>
           </>}
-        <a id='puller-thingy'>▼</a>
+        <a id='inv-puller'>▼</a>
       </div>
-      {token ? (<></>) : (<>
+      {token ? (<>
+        <p>Você não tem veículos registrados.</p>
+        <br />
+        <Link id='vc-link' className='link-below-header' to="/cadastro-veiculo">Cadastre um aqui.</Link>
+      </>) : (<>
         <p>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta.
         </p>
       </>)}
