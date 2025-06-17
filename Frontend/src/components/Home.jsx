@@ -12,14 +12,14 @@ function Home() {
     fetchVeiculos()
   }, [])
 
-  async function fetchTarefas() {
+  async function fetchVeiculos() {
     try {
-        const response = await axios.get('https://desenvolvimento-de-sistema-25-01.onrender.com/tarefas', {
+        const response = await axios.get('https://desenvolvimento-de-sistema-25-01.onrender.com/veiculos', {
             headers: {
                 Authorization: token
             }
         })
-        setTarefas(response.data.tarefas)
+        setVeiculos(response.data.veiculos)
     } catch (err) {
         logout()
         console.log(err)

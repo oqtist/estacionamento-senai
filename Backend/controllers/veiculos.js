@@ -90,7 +90,11 @@ export const destruirVeiculo = async (req, res) => {
 
 export const listarVeiculos = async (req, res) => {
     try{
-        const veiculos = await Veiculos.findAll()
+        const userCheck = await res.locals.user
+
+        const veiculos = await Veiculos.findAll({where: {
+            id_usuario: userCheck.dataValues.id_usuario
+        }})
         
         if(!veiculos) {
             res.status(500).send('Nenhum veículo encontrado.')
