@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { Acessos } from '../models/acessos.js'
 import { Veiculos } from '../models/veiculos.js'
-import { Sequelize, where } from 'sequelize'
+import { Sequelize } from 'sequelize'
 const segredoJwt = process.env.SEGREDO_JWT
 
 export const registrarEntrada = async (req, res) => {

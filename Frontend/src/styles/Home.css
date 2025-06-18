@@ -1,5 +1,6 @@
 header h1 {
   font-weight: 300;
+  color: white;
 }
 
 header {
@@ -31,7 +32,7 @@ header {
 }
 
 #sub-header-selector:hover {
-  top: 19vh;
+  top: 7rem;
   transition: 250ms;
   color: white;
 }
