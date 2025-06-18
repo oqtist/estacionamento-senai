@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode'
 function Home() {
 
   const token = localStorage.getItem('token')
+  const [tokenDecodificado, setTokenDecodificado] = useState(null)
   const [veiculos, setVeiculos] = useState([])
   const [idVeiculoSelecionado, setIdVeiculoSelecionado] = useState()
   const [menu, setMenu] = useState('no-modal')
@@ -14,8 +15,14 @@ function Home() {
   const [placa, setPlaca] = useState()
   const [cor, setCor] = useState()
 
+  if (token && !tokenDecodificado) {
+    const tokenDecode = jwtDecode(token)
+    setTokenDecodificado(tokenDecode)
+  }
+
   function logout() {
     localStorage.removeItem('token')
+    setTokenDecodificado(null)
     window.location.reload()
   }
 
@@ -25,9 +32,6 @@ function Home() {
     }
     // setMenu('no-modal')
   }, [])
-
-  const tokenDecodificado = jwtDecode(token)
-  console.log(tokenDecodificado)
 
   async function postarVeiculo() {
     try {
@@ -78,7 +82,7 @@ function Home() {
       <div id="div-blur" style={menu != 'no-modal' ? { opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', backdropFilter: 'blur(0px)', transition: '400ms' }}>
         <div>
           <div id='div-novo-veiculo' className='modals' style={menu == 'modal-novo-veiculo' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
-            <h1>Adicionar Tarefa:</h1>
+            <h1>Adicionar Veículo:</h1>
             <input type="text" onInput={(e) => setModelo(e.target.value)} placeholder='Modelo' />
             <input type="text" onInput={(e) => setCor(e.target.value)} placeholder='Cor' />
             <input type="text" onInput={(e) => setPlaca(e.target.value)} placeholder='Placa' />
@@ -98,13 +102,13 @@ function Home() {
             <Link className='link-header' id='sair-link' onClick={() => {
               logout()
             }}>Sair</Link>
-            {token.tipo == "ADMIN" && <><Link className='link-header' id='admin-link' to="/admin"></Link></>}
           </>
           :
           <>
             <Link className='link-header' id='registro-link' to="/registro">Registro</Link>
             <Link className='link-header' id='login-link' to="/login">Login</Link>
           </>}
+        {tokenDecodificado && (tokenDecodificado.tipo == "admin" && <Link className='link-header' id='perfil-link' to="/admin">Painel Administrativo</Link>)}
         <a id='inv-puller'>▼</a>
       </div>
       {token ? (veiculos.length > 0 ?
