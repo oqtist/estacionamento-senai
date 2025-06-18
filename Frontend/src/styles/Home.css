@@ -11,8 +11,9 @@ header {
   border-bottom: 0px solid transparent;
   z-index: 2;
   background:
-  linear-gradient(#cefff5, 5%, #0e6654,95%,#cefff5),
-  linear-gradient(to bottom right, white, chartreuse);
+    linear-gradient(#a9ffb7, 10%, #0e6654, 90%, rgb(171, 255, 213)),
+    linear-gradient(to bottom right, #4adbbc, 78%, chartreuse);
+  background-blend-mode: luminosity;
 }
 
 #sub-header-selector {
@@ -90,4 +91,3 @@ header {
   #0E6654 (monochromatic base)
   #1D213C
   */
-
