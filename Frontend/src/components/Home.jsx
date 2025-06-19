@@ -42,7 +42,22 @@ function Home() {
           Authorization: token
         }
       })
+      alert('Veículo registrado!')
       window.location.reload
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function alterarVeiculo() {
+    try {
+      const response = await axios.put(`https://estacionamento-senai.onrender.com/veiculos/${idVeiculoSelecionado}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+      alert('Veículo alterado!')
+      window.location.reload()
     } catch (err) {
       console.log(err)
     }
@@ -69,6 +84,7 @@ function Home() {
           Authorization: token
         }
       })
+      alert('Veículo apagado!')
       window.location.reload()
     }
     catch (err) {
@@ -86,13 +102,31 @@ function Home() {
             <input type="text" onInput={(e) => setModelo(e.target.value)} placeholder='Modelo' />
             <input type="text" onInput={(e) => setCor(e.target.value)} placeholder='Cor' />
             <input type="text" onInput={(e) => setPlaca(e.target.value)} placeholder='Placa' />
-            <button onClick={() => postarVeiculo()} id='botao-add-veiculo'>Adicionar</button>
-            <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2%' }}>Voltar</button>
+            <div className='div-botoes-modals'>
+              <button className='botoes-modals' onClick={() => postarVeiculo()}>Adicionar</button>
+              <button className='botoes-modals' onClick={() => setMenu('no-modal')} >Voltar</button>
+            </div>
+          </div>
+          <div id='div-alterar-veiculo' className='modals' style={menu == 'modal-alterar-veiculo' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
+            <h1>Alterar Veículo:</h1>
+            <input type="text" onInput={(e) => setModelo(e.target.value)} placeholder='Modelo' />
+            <input type="text" onInput={(e) => setCor(e.target.value)} placeholder='Cor' />
+            <input type="text" onInput={(e) => setPlaca(e.target.value)} placeholder='Placa' />
+            <div className='div-botoes-modals'>
+              <button className='botoes-modals' onClick={() => alterarVeiculo()}>Alterar</button>
+              <button className='botoes-modals' onClick={() => setMenu('no-modal')} >Voltar</button>
+            </div>
+          </div>
+          <div id='div-apagar-veiculo' className='modals' style={menu == 'modal-confirmar-exclusao' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
+            <h1 style={{fontSize: '30pt'}}>Tem certeza de que deseja apagar o veículo selecionado?</h1>
+            <div className='div-botoes-modals'>
+              <button className='botoes-modals' id='botao-fechar-modal' onClick={() => apagarVeiculo()}>Apagar</button>
+              <button className='botoes-modals' onClick={() => setMenu('no-modal')} >Cancelar</button>
+            </div>
           </div>
         </div>
       </div>
       <header>
-        <img style={{ objectFit: 'cover', display: 'flex', position: 'absolute', maxHeight: '7.78rem', width: '100%', opacity: '0.32' }} src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages-wixmp-ed30a86b8c4ca887773594c2.wixmp.com%2Ff%2F451b4b99-9bcd-4a9b-9066-7fe38006684c%2Fd671l1n-fddabdcc-744b-452e-a5ee-db881d2be857.png%2Fv1%2Ffill%2Fw_600%2Ch_450%2Cstrp%2Faero_glass_clipart_texture_by_diamond00744_d671l1n-fullview.png%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDUwIiwicGF0aCI6IlwvZlwvNDUxYjRiOTktOWJjZC00YTliLTkwNjYtN2ZlMzgwMDY2ODRjXC9kNjcxbDFuLWZkZGFiZGNjLTc0NGItNDUyZS1hNWVlLWRiODgxZDJiZTg1Ny5wbmciLCJ3aWR0aCI6Ijw9NjAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.IyzfShVm9a-uQSfpC9_Tz92wVl0XEL1niPbUbQ5SA40&f=1&nofb=1&ipt=1707f12c680021ac09316d420fe3127eed8efde44cd590b12b48c75c53617293'></img>
         <h1>Sistema de Estacionamento</h1>
       </header>
       <div id='sub-header-selector'>
@@ -112,29 +146,35 @@ function Home() {
         <a id='inv-puller'>▼</a>
       </div>
       {token ? (veiculos.length > 0 ?
-        <>
-          {veiculos.map((i) => {
+        <div>
+          {veiculos.map((i, index) => {
             return <>
-              <p>{i.modelo}</p>
-              <p>Cor: {i.cor}</p>
-              <p>Placa: {i.placa}</p>
-              <div>
-                <button onClick={() => {
-                  setIdVeiculoSelecionado(i.id_veiculo)
-                  setMenu('modal-alterar-veiculo')
-                }}>✎</button>
-                <button onClick={() => {
-                  setIdVeiculoSelecionado(i.id_veiculo)
-                  setMenu('modal-confirmar-exclusao')
-                }}>X</button>
+              <div id='div-cont-veiculo-info'>
+                <h3>Veículo {index + 1}:</h3>
+                <p>{i.modelo}</p>
+                <p>Cor: {i.cor}</p>
+                <p>Placa: {i.placa}</p>
+                <div id='div-botoes-modificacao-veiculo'>
+                  <button onClick={() => {
+                    setIdVeiculoSelecionado(i.id_veiculo)
+                    setMenu('modal-alterar-veiculo')
+                  }}>✎</button>
+                  <button className='botao-fechar' onClick={() => {
+                    setIdVeiculoSelecionado(i.id_veiculo)
+                    setMenu('modal-confirmar-exclusao')
+                  }}><span style={{ fontWeight: 900 }}>X</span></button>
+                </div>
               </div>
             </>
           })}
-        </> :
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <button style={{ fontSize: '35pt', padding: '2%' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
+          </div>
+        </div> :
         <>
           <p>Você não tem veículos registrados.</p>
           <br />
-          <button onClick={() => setMenu('modal-novo-veiculo')}>+</button>
+          <button style={{ left: '49vw' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
         </>) : (<>
           <p>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta.
           </p>

@@ -1,67 +1,91 @@
-:root {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  :root {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #ffffff;
+    color-scheme: light dark;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #ffffff;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
+  a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: inherit;
+  }
 
-a:hover {
-  color: #535bf2;
-}
+  a:hover {
+    color: #535bf2;
+  }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    width: 100vw;
+    height: 100%;
+    background: linear-gradient(to bottom right, #74b8fcb7, 57%, #0045ac),
+      radial-gradient(ellipse at bottom left, white, #74b8fcb7);
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+  h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+  }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #0b2721;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
+  button {
+    border-radius: 8px;
+    border: 1px solid black;
+    padding: 4%;
+    aspect-ratio: 1;
+    font-weight: 400;
+    font-family: inherit;
+    background: linear-gradient(white 1%, rgba(211, 211, 211, 0.788) 1%, 43%, rgba(165, 165, 165, 0.541) 50%, rgba(128, 128, 128, 0.781) 50%),
+      radial-gradient(grey, 80%, rgba(255, 255, 255, 0.651));
+    background-blend-mode: overlay;
+    cursor: pointer;
+    color: whitesmoke;
+    outline: rgb(255, 255, 255) 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 10px;
+    font-size: x-large;
+    -webkit-text-stroke: black 0.05rem;
+    transition: ease-out 200ms;
+    box-shadow: none;
+  }
 
-button:hover {
-  border-color: #0E6654;
-}
+  button:hover {
+    background: linear-gradient(white 1%, rgba(105, 211, 211, 0.788) 1%, 43%, rgba(82, 165, 165, 0.541) 50%, rgba(64, 128, 128, 0.781) 50%),
+      radial-gradient(grey, 80%, rgba(125, 255, 255, 0.651));
+    box-shadow: 0 0 30px rgb(36, 255, 255);
+  }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  button:active {
+    background: linear-gradient(white 1%, rgba(38, 78, 78, 0.788) 1%, 43%, rgba(30, 61, 61, 0.541) 50%, rgba(20, 41, 41, 0.781) 50%),
+      radial-gradient(grey, 80%, rgba(125, 255, 255, 0.651));
+  }
 
-/*
- Palette ↓
-  #123C33
-  #59BBA7
-  #0E6654
-  #93E6D5
-  #CEFFF5
-*/
+  button:focus,
+  button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  /*
+  Palette ↓
+    #123C33
+    #59BBA7
+    #0E6654
+    #93E6D5
+    #CEFFF5
+  */
