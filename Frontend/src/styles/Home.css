@@ -166,6 +166,12 @@ header::before {
       #bd1802 100%);
 }
 
+.texto-misc {
+  color: white;
+  font-size: larger;
+  text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.678)
+}
+
 #botao-fechar-modal {
   background: linear-gradient(white 1%, rgba(219, 153, 153, 0.788) 1%, 43%, rgba(175, 42, 42, 0.541) 50%, rgba(122, 27, 27, 0.781) 50%, rgb(241, 131, 112)),
     radial-gradient(rgb(133, 60, 60), 85%, rgba(255, 231, 231, 0.651));
@@ -191,12 +197,13 @@ header::before {
   background-color: white;
   display: flex;
   flex-direction: column;
-  margin-block: 10%;
   justify-content: center;
   align-items: center;
   padding-block: 6%;
-  padding-inline: 7%;
-  margin-inline: 30%;
+  padding-inline: 3%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background:
     linear-gradient(#ceffd665, 10%, #0e665428, 90%, rgba(171, 255, 189, 0.596));
   background-blend-mode: luminosity;

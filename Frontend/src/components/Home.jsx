@@ -118,7 +118,7 @@ function Home() {
             </div>
           </div>
           <div id='div-apagar-veiculo' className='modals' style={menu == 'modal-confirmar-exclusao' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
-            <h1 style={{fontSize: '30pt'}}>Tem certeza de que deseja apagar o veículo selecionado?</h1>
+            <h1 style={{ fontSize: '30pt' }}>Tem certeza de que deseja apagar o veículo selecionado?</h1>
             <div className='div-botoes-modals'>
               <button className='botoes-modals' id='botao-fechar-modal' onClick={() => apagarVeiculo()}>Apagar</button>
               <button className='botoes-modals' onClick={() => setMenu('no-modal')} >Cancelar</button>
@@ -171,11 +171,20 @@ function Home() {
             <button style={{ fontSize: '35pt', padding: '2%' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
           </div>
         </div> :
-        <>
-          <p>Você não tem veículos registrados.</p>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
+          <p className='texto-misc'>Você não tem veículos registrados.</p>
           <br />
-          <button style={{ left: '49vw' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
-        </>) : (<>
+          <button style={{ fontSize: '35pt', padding: '1.5rem' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
+        </div>) : (<>
           <p>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta.
           </p>
         </>)}
