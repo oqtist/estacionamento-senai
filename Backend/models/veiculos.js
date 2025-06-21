@@ -24,6 +24,11 @@ const Veiculos = database.define(
         cor: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        status_vaga: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     }, {
     schema: 'estacionamento',

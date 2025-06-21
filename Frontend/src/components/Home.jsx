@@ -8,9 +8,11 @@ function Home() {
 
   const token = localStorage.getItem('token')
   const [tokenDecodificado, setTokenDecodificado] = useState(null)
+
   const [veiculos, setVeiculos] = useState([])
   const [idVeiculoSelecionado, setIdVeiculoSelecionado] = useState()
   const [menu, setMenu] = useState('no-modal')
+
   const [modelo, setModelo] = useState()
   const [placa, setPlaca] = useState()
   const [cor, setCor] = useState()
@@ -28,12 +30,19 @@ function Home() {
 
   useEffect(() => {
     if (token) {
+      tokenRefresh()
       fetchVeiculos()
     }
     // setMenu('no-modal')
   }, [])
 
-
+  async function registrarEntrada() {
+    try{
+      const response = await axios.post('https://estacionamento-senai.onrender.com/vagas/entrada')
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   async function postarVeiculo() {
     try {
@@ -66,6 +75,10 @@ function Home() {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  function tokenRefresh() {
+    localStorage.getItem('token')
   }
 
   async function fetchVeiculos() {
@@ -164,7 +177,7 @@ function Home() {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-alterar-veiculo')
                   }}>✎</button>
-                  <button id='registrar-entrada-botao'>Registrar Entrada</button>
+                  <button onClick={() => registrarEntrada()} id='registrar-entrada-botao'>Registrar Entrada</button>
                   <button className='botao-fechar' onClick={() => {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-confirmar-exclusao')

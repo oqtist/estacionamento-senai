@@ -108,24 +108,3 @@ export const listarVeiculos = async (req, res) => {
         console.log(err)
     }
 }
-
-export const veiculosExclusaoConta = async (req, res) => {
-    try {
-        const userCheck = await res.locals.user
-
-        const vehicleCheck = await Veiculos.findAll({
-            where: {
-                id_usuario: userCheck.dataValues.id_usuario
-            }
-        })
-
-        if (userCheck) {
-            await vehicleCheck.destroy()
-            res.status(200).send({ mensagem: "Todos os veículos do usuário foram removidos." })
-        } else {
-            res.status(400).send({ mensagem: "Usuário não corresponde." })
-        }
-    } catch (err) {
-        console.log(err)
-    }
-}

@@ -230,3 +230,10 @@ header::before {
       radial-gradient(ellipse at bottom left, white, #74b8fcb7);
     background-blend-mode: overlay;
   }
+
+  #registrar-entrada-botao {
+    width: 20rem;
+    height: 1rem;
+    -webkit-text-stroke: transparent;
+    font-weight: 300;
+  }

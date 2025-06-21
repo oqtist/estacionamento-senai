@@ -66,7 +66,6 @@ function Perfil() {
           Authorization: token
         }
       })
-
       alert('Usuário Apagado.')
       localStorage.removeItem('token')
       setTokenDecodificado(null)

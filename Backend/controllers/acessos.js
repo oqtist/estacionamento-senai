@@ -4,6 +4,8 @@ import { Veiculos } from '../models/veiculos.js'
 import { Sequelize } from 'sequelize'
 const segredoJwt = process.env.SEGREDO_JWT
 
+let QUANTIA_VAGAS = 0
+
 export const registrarEntrada = async (req, res) => {
     try {
         const id = req.params.id

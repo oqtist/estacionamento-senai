@@ -5,7 +5,6 @@ import { routerUser } from './routes/users.js'
 import { routerVeiculos } from './routes/veiculos.js'
 import { routerAcesso } from './routes/acessos.js'
 import { routerAdmin } from './routes/admin.js'
-import { routerVagas } from './routes/vagas.js'
 const app = express()
 
 import { database } from './database.js'
@@ -15,7 +14,7 @@ import { Acessos } from './models/acessos.js'
 
 app.use(cors())
 app.use(express.json())
-app.use(routerUser, routerVeiculos, routerAcesso, routerAdmin, routerVagas)
+app.use(routerUser, routerVeiculos, routerAcesso, routerAdmin)
 
 try {
     await database.sync({ force: true })
