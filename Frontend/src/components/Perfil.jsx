@@ -32,7 +32,7 @@ function Perfil() {
         }
       })
       setUsuarioInfo(response.data)
-      console.log(tokenDecodificado)
+      console.log(response)
     } catch (err) {
       console.log(err)
     }
@@ -65,7 +65,7 @@ function Perfil() {
           Authorization: token
         }
       })
-      
+
       alert('Usuário Apagado.')
       localStorage.removeItem('token')
       setTokenDecodificado(null)
