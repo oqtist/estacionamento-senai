@@ -33,7 +33,7 @@ function Admin() {
           <div id='div-quantia-vagas' className='modals' style={menu == 'modal-quantia-vagas' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h1 style={{ fontSize: '30pt' }}>Especifique a quantia de vagas disponíveis:</h1>
             <input type="number" onInput={(e) => {
-              setQuantia(e.target.value)
+              setQuantia(Number(e.target.value))
               console.log(quantia)
             }} placeholder='' />
             <div className='div-botoes-modals'>
@@ -48,7 +48,7 @@ function Admin() {
         <h1>Painel Administrativo</h1>
       </header>
       <div id='sub-header-selector'>
-        <Link className='link-header' id='perfil-link' to="/">Home</Link>
+        <Link className='link-header' id='perfil-link' to="/">Início</Link>
         <Link className='link-header' id='sair-link' onClick={() => {
           localStorage.removeItem('token')
           navigate(-1)
