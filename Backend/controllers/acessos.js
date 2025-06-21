@@ -6,11 +6,14 @@ let QUANTIA_VAGAS
 
 export const alterarQuantiaVagas = async (req, res) => {
     try {
-        const quantia = req.body
+        const { quantia } = req.body
 
+        if (isNaN(Number(quantia))) {
+            res.status(400).send({ mensagem: 'Valor inválido. Tente novamente.' })
+        }
         if (Number(quantia) >= 0) {
             QUANTIA_VAGAS = quantia
-            res.status(200).send({mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}`})
+            res.status(200).send({ mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}` })
         }
 
     } catch (err) {
@@ -32,8 +35,8 @@ export const registrarEntrada = async (req, res) => {
             return
         }
 
-        if(vagasOcupadas >= QUANTIA_VAGAS) {
-            res.status(400).send({mensagem: 'Não há vagas disponíveis no momento.'})
+        if (vagasOcupadas >= QUANTIA_VAGAS) {
+            res.status(400).send({ mensagem: 'Não há vagas disponíveis no momento.' })
             return
         }
 
