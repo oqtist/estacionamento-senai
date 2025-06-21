@@ -10,8 +10,11 @@ export const alterarQuantiaVagas = async (req, res) => {
     try {
         const quantia = req.body
 
-        if (typeof quantia === 'number') {
+        if (typeof quantia === 'number' && quantia >= 0) {
             QUANTIA_VAGAS = quantia
+            res.status(200).send({mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}`})
+        } else {
+            res.status(400).send({mensagem: 'Valor inválido. Tente outro.'})
         }
 
     } catch (err) {
