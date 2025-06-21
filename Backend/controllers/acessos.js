@@ -1,8 +1,6 @@
-import jwt from 'jsonwebtoken'
 import { Acessos } from '../models/acessos.js'
 import { Veiculos } from '../models/veiculos.js'
 import { Sequelize } from 'sequelize'
-const segredoJwt = process.env.SEGREDO_JWT
 
 let QUANTIA_VAGAS = 0
 
@@ -10,7 +8,7 @@ export const alterarQuantiaVagas = async (req, res) => {
     try {
         const quantia = req.body
 
-        if (typeof quantia === 'number' && quantia >= 0) {
+        if (typeof quantia == 'number' && quantia >= 0) {
             QUANTIA_VAGAS = quantia
             res.status(200).send({mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}`})
         } else {
