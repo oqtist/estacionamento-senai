@@ -84,9 +84,9 @@ function Perfil() {
           <div id='div-alterar-usuario' className='modals' style={menu == 'modal-alterar-usuario' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h1>Alterar Dados:</h1>
             <input type="text" onInput={(e) => setNome(e.target.value)} placeholder='Nome' />
-            <input type="text" onInput={(e) => setEmail(e.target.value)} placeholder='E-mail' />
-            <input type="text" onInput={(e) => setSenha(e.target.value)} placeholder='Senha' />
-            <input type="text" onInput={(e) => setSenhaOld(e.target.value)} placeholder='Senha Anterior' />
+            <input type="email" onInput={(e) => setEmail(e.target.value)} placeholder='E-mail' />
+            <input type="password" onInput={(e) => setSenha(e.target.value)} placeholder='Senha' />
+            <input type="password" onInput={(e) => setSenhaOld(e.target.value)} placeholder='Senha Anterior' />
             <div className='div-botoes-modals'>
               <button className='botoes-modals' onClick={() => alterarUsuario()}>Alterar</button>
               <button className='botoes-modals' onClick={() => setMenu('no-modal')} >Voltar</button>

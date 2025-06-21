@@ -77,8 +77,14 @@ export const atualizarUsuario = async (req, res) => {
                         return
                     }
                 });
-                userCheck.senha = await bcrypt.hash(senha, saltRounds)
+            } else if (!senha) {
+                res.status(500).send('Nenhuma senha foi inserida.')
+                return
+            } if (!senhaOld) {
+                res.status(500).send('A senha antiga não foi inserida.')
+                return
             }
+            userCheck.senha = await bcrypt.hash(senha, saltRounds)
 
             if (nome || tipo || email || senha) {
                 await userCheck.save()
