@@ -54,6 +54,7 @@ function Perfil() {
       alert('Dados alterados!')
       window.location.reload()
     } catch (err) {
+      alert(err.response.data)
       console.log(err)
     }
   }
