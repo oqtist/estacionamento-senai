@@ -9,9 +9,10 @@ export const alterarQuantiaVagas = async (req, res) => {
         const quantia = req.body
 
         if(isNaN(quantia)) {
-            return res.status(500).send({mensagem: 'Valor inválido. Tente novamente.'})
+            return res.status(400).send({mensagem: 'Valor inválido. Tente novamente.'})
+            console.log(quantia)
         }
-        if (quantia >= 0) {
+        if (Number(quantia) >= 0) {
             QUANTIA_VAGAS = quantia
             res.status(200).send({mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}`})
         }
