@@ -23,9 +23,6 @@ const Veiculos = database.define(
         cor: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        imagem: {
-            type: DataTypes.STRING
         }
     }, {
     schema: 'estacionamento',

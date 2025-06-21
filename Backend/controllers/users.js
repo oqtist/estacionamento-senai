@@ -56,7 +56,7 @@ export const login = async (req, res) => {
 
 export const atualizarUsuario = async (req, res) => {
     try {
-        const { nome, tipo, email, senha } = req.body
+        const { nome, tipo, email, senha, senhaOld } = req.body
         const saltRounds = 10
 
         const userCheck = await res.locals.user
@@ -70,9 +70,15 @@ export const atualizarUsuario = async (req, res) => {
             if (email) {
                 userCheck.email = email
             }
-            if (senha) {
-                const hash = await bcrypt.hash(senha, saltRounds)
-                userCheck.senha = hash
+            if (senha && senhaOld) {
+                const hash = await bcrypt.hash(senhaOld, saltRounds)
+                bcrypt.compare(userCheck.senha, hash, function (err, result) {
+                    if (!result) {
+                        res.status(500).send('Senha antiga incorreta. Tente novamente.')
+                        return
+                    }
+                });
+                userCheck.senha = await bcrypt.hash(senha, saltRounds)
             }
 
             if (nome || tipo || email || senha) {

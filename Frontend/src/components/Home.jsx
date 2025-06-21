@@ -33,6 +33,8 @@ function Home() {
     // setMenu('no-modal')
   }, [])
 
+
+
   async function postarVeiculo() {
     try {
       const response = await axios.post('https://estacionamento-senai.onrender.com/cadastro-veiculos', {
@@ -42,6 +44,7 @@ function Home() {
           Authorization: token
         }
       })
+      setMenu('modal')
       alert('Veículo registrado!')
       window.location.reload()
     } catch (err) {
@@ -152,11 +155,11 @@ function Home() {
           {veiculos.map((i, index) => {
             return <>
               <div className='div-cont-info'>
-                <h3>Veículo {index + 1}:</h3>
-                <p>{i.modelo}</p>
+                <h3>{i.modelo} {i.cor}</h3>
+                <p>Modelo: {i.modelo}</p>
                 <p>Cor: {i.cor}</p>
                 <p>Placa: {i.placa}</p>
-                <div id='div-botoes-modificacao-veiculo'>
+                <div id='div-botoes-modificacao'>
                   <button onClick={() => {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-alterar-veiculo')

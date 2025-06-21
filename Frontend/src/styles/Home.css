@@ -68,7 +68,7 @@ header::before {
   color: transparent;
 }
 
-#div-botoes-modificacao-veiculo {
+#div-botoes-modificacao {
   display: flex;
   justify-content: space-around;
 }
