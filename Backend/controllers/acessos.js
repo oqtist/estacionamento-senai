@@ -2,7 +2,7 @@ import { Acessos } from '../models/acessos.js'
 import { Veiculos } from '../models/veiculos.js'
 import { Sequelize } from 'sequelize'
 
-let QUANTIA_VAGAS = 0
+let QUANTIA_VAGAS
 
 export const alterarQuantiaVagas = async (req, res) => {
     try {
