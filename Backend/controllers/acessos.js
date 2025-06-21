@@ -35,7 +35,7 @@ export const registrarEntrada = async (req, res) => {
             return
         }
 
-        if (vagasOcupadas >= QUANTIA_VAGAS) {
+        if (vagasOcupadas.count >= QUANTIA_VAGAS) {
             res.status(400).send({ mensagem: 'Não há vagas disponíveis no momento.' })
             return
         }

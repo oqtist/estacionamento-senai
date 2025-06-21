@@ -20,7 +20,8 @@ function Admin() {
           Authorization: token
         }
       })
-      alert(`Quantia de vagas alterada para ${quantia}`)
+      alert(`Quantia de vagas alterada para ${quantia}.`)
+      setMenu('no-modal')
     } catch (err) {
       console.log(err)
     }

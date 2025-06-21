@@ -37,7 +37,7 @@ function Home() {
 
   async function registrarEntrada() {
     try {
-      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/entrada/${idVeiculoSelecionado}`, {
+      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/entrada/${idVeiculoSelecionado}`, {}, {
         headers: {
           Authorization: token
         }
