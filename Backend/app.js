@@ -5,6 +5,7 @@ import { routerUser } from './routes/users.js'
 import { routerVeiculos } from './routes/veiculos.js'
 import { routerAcesso } from './routes/acessos.js'
 import { routerAdmin } from './routes/admin.js'
+import { routerVagas } from './routes/vagas.js'
 const app = express()
 
 import { database } from './database.js'
