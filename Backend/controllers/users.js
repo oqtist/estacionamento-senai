@@ -71,9 +71,8 @@ export const atualizarUsuario = async (req, res) => {
                 userCheck.email = email
             }
             if (senha && senhaOld) {
-                const hash = await bcrypt.hash(senhaOld, saltRounds)
-                bcrypt.compare(userCheck.senha, hash, function (err, result) {
-                    if (!result) {
+                const matchSenha = bcrypt.compare(senhaOld, userCheck.senha, function (err, result) {
+                    if (!matchSenha) {
                         res.status(500).send('Senha antiga incorreta. Tente novamente.')
                         return
                     }
