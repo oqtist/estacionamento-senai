@@ -44,6 +44,8 @@ export const registrarEntrada = async (req, res) => {
 
             const id_veiculo = veiculoCheck.dataValues.id_veiculo
             const entrada = await Acessos.create({ id_veiculo })
+            veiculoCheck.status_vaga = true
+            await veiculoCheck.save()
             res.status(200).send({ mensagem: 'Entrada Registrada!', data: entrada })
         }
         else {
