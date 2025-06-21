@@ -1,7 +1,9 @@
 import '../styles/Perfil.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Perfil() {
+
+  let navigate = useNavigate()
 
   return (
     <>
@@ -12,10 +14,14 @@ function Perfil() {
         <>
           <Link className='link-header' id='home-link' to="/">Início</Link>
           <Link className='link-header' id='sair-link' onClick={() => {
-            logout()
+            localStorage.removeItem('token')
+            navigate(-1)
           }}>Sair</Link>
         </>
         <a id='inv-puller'>▼</a>
+      </div>
+      <div className='div-cont-info'>
+        
       </div>
     </>
   )

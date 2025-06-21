@@ -105,3 +105,17 @@ export const destruirUsuario = async (req, res) => {
         console.log(err)
     }
 }
+
+export const listarInfo = async (req, res) => {
+    try {
+        const userCheck = await res.locals.user
+
+        if (!userCheck) {
+            res.status(400).send('Token válido, mas não para este usuário. Tente Novamente.')
+            return
+        }
+        res.status(200).send({ nome: userCheck.dataValues.nome, tipo: userCheck.dataValues.tipo, email: userCheck.dataValues.email })
+    } catch (err) {
+        console.log(err)
+    }
+}

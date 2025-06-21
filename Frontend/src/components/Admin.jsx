@@ -1,7 +1,9 @@
 import '../styles/Admin.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Admin() {
+
+  let navigate = useNavigate()
 
   return (
     <>
@@ -14,9 +16,9 @@ function Admin() {
 
         <Link className='link-header' id='perfil-link' to="/">Home</Link>
         <Link className='link-header' id='sair-link' onClick={() => {
-          logout()
+          localStorage.removeItem('token')
+          navigate(-1)
         }}>Sair</Link>
-        <Link className='link-header' id='perfil-link' to="/admin">Painel Administrativo</Link>
         <a id='inv-puller'>▼</a>
       </div>
     </>

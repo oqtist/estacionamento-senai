@@ -43,7 +43,7 @@ function Home() {
         }
       })
       alert('Veículo registrado!')
-      window.location.reload
+      window.location.reload()
     } catch (err) {
       console.log(err)
     }
@@ -52,6 +52,8 @@ function Home() {
   async function alterarVeiculo() {
     try {
       const response = await axios.put(`https://estacionamento-senai.onrender.com/veiculos/${idVeiculoSelecionado}`, {
+        placa, cor, modelo
+      }, {
         headers: {
           Authorization: token
         }
@@ -133,6 +135,7 @@ function Home() {
         {token ?
           <>
             <Link className='link-header' id='perfil-link' to="/perfil">Perfil</Link>
+            {tokenDecodificado && (tokenDecodificado.tipo == "admin" && <Link className='link-header' id='perfil-link' to="/admin">Painel Administrativo</Link>)}
             <Link className='link-header' id='sair-link' onClick={() => {
               logout()
             }}>Sair</Link>
@@ -142,14 +145,13 @@ function Home() {
             <Link className='link-header' id='registro-link' to="/registro">Registro</Link>
             <Link className='link-header' id='login-link' to="/login">Login</Link>
           </>}
-        {tokenDecodificado && (tokenDecodificado.tipo == "admin" && <Link className='link-header' id='perfil-link' to="/admin">Painel Administrativo</Link>)}
         <a id='inv-puller'>▼</a>
       </div>
       {token ? (veiculos.length > 0 ?
         <div>
           {veiculos.map((i, index) => {
             return <>
-              <div id='div-cont-veiculo-info'>
+              <div className='div-cont-info'>
                 <h3>Veículo {index + 1}:</h3>
                 <p>{i.modelo}</p>
                 <p>Cor: {i.cor}</p>
@@ -171,23 +173,14 @@ function Home() {
             <button style={{ fontSize: '35pt', padding: '2%' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
           </div>
         </div> :
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}>
+        <div className='div-geral-body'>
           <p className='texto-misc'>Você não tem veículos registrados.</p>
           <br />
           <button style={{ fontSize: '35pt', padding: '1.5rem' }} onClick={() => setMenu('modal-novo-veiculo')}><span className='texto-botoes'>+</span></button>
-        </div>) : (<>
-          <p>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta.
+        </div>) : (<div className='div-geral-body'>
+          <p className='texto-misc'>Faça <Link id='login-link' className='link-below-header' to="/login">login</Link> para ver seus veículos registrados ou<br /><Link className='link-below-header' id='registro-link' to="/registro">registre-se</Link> se não possuir conta.
           </p>
-        </>)}
+        </div>)}
     </>
   )
 }
