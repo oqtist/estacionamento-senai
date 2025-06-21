@@ -12,14 +12,13 @@ function Admin() {
         <h1>Painel Administrativo</h1>
       </header>
       <div id='sub-header-selector'>
-
-
         <Link className='link-header' id='perfil-link' to="/">Home</Link>
         <Link className='link-header' id='sair-link' onClick={() => {
           localStorage.removeItem('token')
           navigate(-1)
         }}>Sair</Link>
         <a id='inv-puller'>▼</a>
+
       </div>
     </>
   )

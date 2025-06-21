@@ -49,11 +49,4 @@ Veiculos.hasOne(Acessos, {
     }
 })
 
-Veiculos.hasOne(Vagas, {
-    foreignKey: {
-        allowNull: false,
-        name: 'id_veiculo'
-    }
-})
-
 export { Veiculos }

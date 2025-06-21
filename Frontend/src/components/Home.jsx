@@ -37,9 +37,11 @@ function Home() {
   }, [])
 
   async function registrarEntrada() {
-    try{
-      const response = await axios.post('https://estacionamento-senai.onrender.com/vagas/entrada')
+    try {
+      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/entrada/${idVeiculoSelecionado}`)
+      alert('Entrada registrada!')
     } catch (err) {
+      alert(err)
       console.log(err)
     }
   }
@@ -177,7 +179,11 @@ function Home() {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-alterar-veiculo')
                   }}>✎</button>
-                  <button onClick={() => registrarEntrada()} id='registrar-entrada-botao'>Registrar Entrada</button>
+                  <button onClick={() => {
+                    setIdVeiculoSelecionado(i.id_veiculo)
+                    registrarEntrada()
+                  }
+                  } id='registrar-entrada-botao'>Registrar Entrada</button>
                   <button className='botao-fechar' onClick={() => {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-confirmar-exclusao')
