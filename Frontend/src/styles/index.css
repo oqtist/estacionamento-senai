@@ -92,6 +92,7 @@
     color: black;
     text-shadow: 0 0 4px white;
     position: relative;
+    font-size: large;
   }
 
   .div-cont-info::before {

@@ -164,6 +164,7 @@ function Home() {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-alterar-veiculo')
                   }}>✎</button>
+                  <button id='registrar-entrada-botao'>Registrar Entrada</button>
                   <button className='botao-fechar' onClick={() => {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-confirmar-exclusao')
