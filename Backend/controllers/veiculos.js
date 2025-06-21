@@ -78,7 +78,7 @@ export const destruirVeiculo = async (req, res) => {
                 await vehicleCheck.destroy()
                 res.status(200).send({ mensagem: `Veículo '${vehicleCheck.dataValues.modelo}', placa '${vehicleCheck.dataValues.placa}' removido.` })
             } else {
-                res.status(400).send({mensagem: 'Veículo não encontrado.'})
+                res.status(400).send({ mensagem: 'Veículo não encontrado.' })
             }
         } else {
             res.status(500).send('Usuário incorreto para este veículo.')
@@ -89,20 +89,43 @@ export const destruirVeiculo = async (req, res) => {
 }
 
 export const listarVeiculos = async (req, res) => {
-    try{
+    try {
         const userCheck = await res.locals.user
 
-        const veiculos = await Veiculos.findAll({where: {
-            id_usuario: userCheck.dataValues.id_usuario
-        }})
-        
-        if(!veiculos) {
+        const veiculos = await Veiculos.findAll({
+            where: {
+                id_usuario: userCheck.dataValues.id_usuario
+            }
+        })
+
+        if (!veiculos) {
             res.status(500).send('Nenhum veículo encontrado.')
             return
         }
-        res.status(200).send({veiculos: veiculos})
+        res.status(200).send({ veiculos: veiculos })
 
-    } catch(err) {
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const veiculosExclusaoConta = async (req, res) => {
+    try {
+        const userCheck = await res.locals.user
+
+        const vehicleCheck = await Veiculos.findAll({
+            where: {
+                id_usuario: userCheck.dataValues.id_usuario
+            }
+        })
+
+        if (userCheck) {
+            await vehicleCheck.destroy()
+            res.status(200).send({ mensagem: "Todos os veículos do usuário foram removidos." })
+        } else {
+            res.status(400).send({ mensagem: "Usuário não corresponde." })
+        }
+    } catch (err) {
         console.log(err)
     }
 }

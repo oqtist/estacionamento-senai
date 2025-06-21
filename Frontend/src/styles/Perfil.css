@@ -1,3 +1,8 @@
 #tipo-usuario-texto {
   text-transform: capitalize;
 }
+
+#div-super-exclusao {
+   background:
+    linear-gradient(#ffd1ce65, 10%, #660e0e28, 90%, rgba(255, 88, 59, 0.596));
+}
