@@ -66,8 +66,10 @@ export const registrarSaida = async (req, res) => {
         const acessoCheck = await Acessos.findOne({ where: { id_veiculo: veiculoCheck.dataValues.id_veiculo, data_saida: null } })
 
         if (acessoCheck) {
+            veiculoCheck.status_vaga = false
             const saida = acessoCheck.data_saida = Sequelize.literal('CURRENT_TIMESTAMP')
             await acessoCheck.save()
+            await veiculoCheck.save()
             res.status(200).send({ mensagem: 'Saída Registrada!', data: saida })
         } else {
             res.status(500).send({ mensagem: 'Registro de entrada para este ID não encontrado.' })

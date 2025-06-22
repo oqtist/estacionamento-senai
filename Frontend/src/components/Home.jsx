@@ -42,7 +42,23 @@ function Home() {
           Authorization: token
         }
       })
+      fetchVeiculos()
       alert('Entrada registrada!')
+    } catch (err) {
+      alert(err)
+      console.log(err)
+    }
+  }
+
+  async function registrarSaida() {
+    try {
+      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/saida/${idVeiculoSelecionado}`, {}, {
+        headers: {
+          Authorization: token
+        }
+      })
+      fetchVeiculos()
+      alert('Saída registrada!')
     } catch (err) {
       alert(err)
       console.log(err)
@@ -94,6 +110,7 @@ function Home() {
         }
       })
       setVeiculos(response.data.veiculos)
+      console.log(response)
     } catch (err) {
       alert(err)
       console.log(err)
@@ -182,11 +199,16 @@ function Home() {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-alterar-veiculo')
                   }}>✎</button>
-                  <button onClick={() => {
+                  {i.status_vaga ? <button onClick={() => {
+                    setIdVeiculoSelecionado(i.id_veiculo)
+                    registrarSaida()
+                  }} className='botoes-acesso'>
+                    Registrar Saída
+                  </button> : <button onClick={() => {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     registrarEntrada()
                   }
-                  } id='registrar-entrada-botao'>Registrar Entrada</button>
+                  } className='botoes-acesso'>Registrar Entrada</button>}
                   <button className='botao-fechar' onClick={() => {
                     setIdVeiculoSelecionado(i.id_veiculo)
                     setMenu('modal-confirmar-exclusao')

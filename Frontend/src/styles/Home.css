@@ -231,7 +231,7 @@ header::before {
     background-blend-mode: overlay;
   }
 
-  #registrar-entrada-botao {
+  .botoes-acesso {
     width: 20rem;
     height: 1rem;
     -webkit-text-stroke: transparent;
