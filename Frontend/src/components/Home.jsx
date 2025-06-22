@@ -17,10 +17,7 @@ function Home() {
   const [placa, setPlaca] = useState()
   const [cor, setCor] = useState()
 
-  if (token && !tokenDecodificado) {
-    const tokenDecode = jwtDecode(token)
-    setTokenDecodificado(tokenDecode)
-  }
+  const [userData, setUserData] = useState([]) // ...
 
   function logout() {
     localStorage.removeItem('token')
@@ -31,7 +28,7 @@ function Home() {
   useEffect(() => {
     if (token) {
       tokenRefresh()
-      fetchVeiculos()
+      fetchData()
     }
   }, [])
 
@@ -42,7 +39,7 @@ function Home() {
           Authorization: token
         }
       })
-      fetchVeiculos()
+      fetchData()
       alert('Entrada registrada!')
     } catch (err) {
       alert(err)
@@ -57,7 +54,7 @@ function Home() {
           Authorization: token
         }
       })
-      fetchVeiculos()
+      fetchData()
       alert('Saída registrada!')
     } catch (err) {
       alert(err)
@@ -99,18 +96,26 @@ function Home() {
   }
 
   function tokenRefresh() {
+    const tokenDecode = jwtDecode(token)
     localStorage.getItem('token')
+    setTokenDecodificado(tokenDecode)
   }
 
-  async function fetchVeiculos() {
+  async function fetchData() {
     try {
       const response = await axios.get('https://estacionamento-senai.onrender.com/veiculos/', {
         headers: {
           Authorization: token
         }
       })
+      const userInfo = await axios.get('https://estacionamento-senai.onrender.com/usuario/', {
+        headers: {
+          Authorization: token
+        }
+      })
       setVeiculos(response.data.veiculos)
-      console.log(response)
+      setUserData(userInfo)
+      console.log(userInfo)
     } catch (err) {
       alert(err)
       console.log(err)
@@ -187,6 +192,7 @@ function Home() {
       </div>
       {token ? (veiculos.length > 0 ?
         <div>
+          <h3 id='texto-boas-vindas'>Boas-vindas, {userData.data.nome}!</h3>
           {veiculos.map((i, index) => {
             return <>
               <div className='div-cont-info'>

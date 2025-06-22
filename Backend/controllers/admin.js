@@ -1,7 +1,6 @@
 import { Acessos } from '../models/acessos.js'
 import { Veiculos } from '../models/veiculos.js'
 import { Usuario } from '../models/users.js'
-const segredoJwt = process.env.SEGREDO_JWT
 
 export const listarUsuarios = async (req, res) => {
     try {

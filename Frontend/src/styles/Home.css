@@ -225,15 +225,48 @@ header::before {
   pointer-events: all;
 }
 
-  body {
-    background: linear-gradient(to bottom right, #74b8fcb7, 57%, #0045ac),
-      radial-gradient(ellipse at bottom left, white, #74b8fcb7);
-    background-blend-mode: overlay;
+body {
+  background: linear-gradient(to bottom right, #74b8fcb7, 57%, #0045ac),
+    radial-gradient(ellipse at bottom left, white, #74b8fcb7);
+  background-blend-mode: overlay;
+}
+
+.botoes-acesso {
+  width: 20rem;
+  height: 1rem;
+  -webkit-text-stroke: transparent;
+  font-weight: 300;
+}
+
+#texto-boas-vindas {
+  top: 5rem;
+  right: 2.4rem;
+  font-weight: 200;
+  font-size: 55pt;
+  position: absolute;
+  color: midnightblue;
+  opacity: 0.47;
+  animation:
+    1.75s ease-out slideINBoasVindas,
+    2.9s ease-in-out slideOUTBoasVindas 5.5s forwards;
+}
+
+@keyframes slideINBoasVindas {
+  0% {
+    transform: translateY(-100%);
   }
 
-  .botoes-acesso {
-    width: 20rem;
-    height: 1rem;
-    -webkit-text-stroke: transparent;
-    font-weight: 300;
+  100% {
+    transform: translateY(0%);
   }
+}
+
+@keyframes slideOUTBoasVindas {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(-150%);
+  }
+}

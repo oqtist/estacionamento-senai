@@ -2,6 +2,7 @@ import { useState } from 'react'
 import '../styles/Admin.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useEffect } from 'react'
 
 function Admin() {
 
@@ -10,6 +11,16 @@ function Admin() {
   const [menu, setMenu] = useState('no-modal')
   const [quantia, setQuantia] = useState()
   let navigate = useNavigate()
+
+  const [userData, setUserData] = useState([])
+  const [vehicleData, setVehicleData] = useState([])
+  const [accessData, setAccessData] = useState({})
+
+  useEffect(() => {
+    fetchAcessos()
+    fetchUsers()
+    fetchVeiculos()
+  }, [])
 
   async function alterarQuantia() {
     try {
@@ -23,6 +34,48 @@ function Admin() {
       alert(`Quantia de vagas alterada para ${quantia}.`)
       setMenu('no-modal')
     } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function fetchUsers() {
+    try {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/usuarios/', {
+        headers: {
+          Authorization: token
+        }
+      })
+      setUserData(response.data)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function fetchAcessos() {
+    try {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/acessos/', {
+        headers: {
+          Authorization: token
+        }
+      })
+      setAccessData(response.data)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function fetchVeiculos() {
+    try {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/veiculos/', {
+        headers: {
+          Authorization: token
+        }
+      })
+      setVehicleData(response.data)
+    }
+    catch (err) {
       console.log(err)
     }
   }
@@ -42,6 +95,78 @@ function Admin() {
               <button className='botoes-modals' onClick={() => setMenu('no-modal')} >Voltar</button>
             </div>
           </div>
+          <div id='div-listagem-acessos' className='modals' style={menu == 'modal-lista-acessos' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
+            <h3 className='listagem-admin-titulo'>
+              Log de Acessos
+            </h3>
+            <div className='listagem-admin'>
+              <table>
+                <tr>
+                  <th>Data de Entrada</th>
+                  <th>Data de Saída</th>
+                  <th>Veículo</th>
+                </tr>
+                {accessData.listaAcessos?.map((i) => {
+                  return <>
+                    <tr>
+                      <td>{i.data_entrada}</td>
+                      <td>{i.data_saida}</td>
+                      <td>{i.id_veiculo}</td>
+                    </tr>
+                  </>
+                })}
+              </table>
+            </div>
+            <button onClick={() => setMenu('no-modal')} style={{marginTop: '2rem'}} className='botoes-modals'>Voltar</button>
+          </div>
+          <div id='div-listagem-veiculos' className='modals' style={menu == 'modal-lista-veiculos' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
+            <h3 className='listagem-admin-titulo'>
+              Registro de Veículos
+            </h3>
+            <div className='listagem-admin'>
+              <table>
+                <tr>
+                  <th>Modelo</th>
+                  <th>Cor</th>
+                  <th>Placa</th>
+                </tr>
+                {vehicleData.listaVeiculos?.map((i) => {
+                  return <>
+                    <tr>
+                      <td>{i.modelo}</td>
+                      <td>{i.cor}</td>
+                      <td>{i.placa}</td>
+                    </tr>
+                  </>
+                })}
+              </table>
+            </div>
+            <button onClick={() => setMenu('no-modal')} style={{marginTop: '2rem'}} className='botoes-modals'>Voltar</button>
+          </div>
+          <div id='div-listagem-usuarios' className='modals' style={menu == 'modal-lista-usuarios' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
+            <h3 className='listagem-admin-titulo'>
+              Registro de Usuários
+            </h3>
+            <div className='listagem-admin'>
+              <table>
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Tipo</th>
+                </tr>
+                {userData.listaUsuarios?.map((i) => {
+                  return <>
+                    <tr>
+                      <td>{i.nome}</td>
+                      <td>{i.email}</td>
+                      <td>{i.tipo}</td>
+                    </tr>
+                  </>
+                })}
+              </table>
+            </div>
+            <button onClick={() => setMenu('no-modal')} style={{marginTop: '2rem'}} className='botoes-modals'>Voltar</button>
+          </div>
         </div>
       </div>
       <header>
@@ -56,8 +181,14 @@ function Admin() {
         }}>Sair</Link>
         <a id='inv-puller'>▼</a>
       </div>
-      <div className='modals'>
+      <div id='modal-admin-main' style={{ flexDirection: 'row' }}>
         <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
+        <div style={{ flexDirection: 'column' }}>
+          <h2>Listagens:</h2>
+          <button onClick={() => { setMenu('modal-lista-acessos'); console.log(accessData) }} className='botoes-modals-admin-2'>Acessos</button>
+          <button onClick={() => { setMenu('modal-lista-usuarios'); console.log(userData) }} className='botoes-modals-admin-2'>Usuários</button>
+          <button onClick={() => { setMenu('modal-lista-veiculos'); console.log(vehicleData) }} className='botoes-modals-admin-2'>Veículos</button>
+        </div>
       </div>
     </>
   )
