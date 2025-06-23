@@ -25,7 +25,7 @@ export const registrarEntrada = async (req, res) => {
     try {
         const id = req.params.id
 
-        const userCheck = await res.locals.user
+        const userCheck = res.locals.user
         const veiculoCheck = await Veiculos.findByPk(id)
         const acessoCheck = await Acessos.findOne({ where: { id_veiculo: veiculoCheck.dataValues.id_veiculo, data_saida: null } })
         const vagasOcupadas = await Acessos.findAndCountAll({ where: { data_saida: null } })
@@ -43,7 +43,8 @@ export const registrarEntrada = async (req, res) => {
         if (userCheck && veiculoCheck && userCheck.dataValues.id_usuario == veiculoCheck.dataValues.id_usuario) {
 
             const id_veiculo = veiculoCheck.dataValues.id_veiculo
-            const entrada = await Acessos.create({ id_veiculo })
+            const id_usuario = userCheck.dataValues.id_usuario
+            const entrada = await Acessos.create({ id_veiculo, id_usuario })
             veiculoCheck.status_vaga = true
             await veiculoCheck.save()
             res.status(200).send({ mensagem: 'Entrada Registrada!', data: entrada })

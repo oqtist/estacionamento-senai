@@ -78,6 +78,7 @@ function Admin() {
       setAccessData(response.data)
     }
     catch (err) {
+      alert(err.response.data.mensagem)
       console.log(err)
     }
   }
@@ -178,11 +179,11 @@ function Admin() {
                 </tr>
                 {vagasData?.vagasOcupadas?.rows?.map((i) => {
                   return <>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>{i.data_entrada}</td>
-                  </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td>{i.data_entrada}</td>
+                    </tr>
                   </>
                 })}
               </table>
@@ -231,9 +232,9 @@ function Admin() {
         <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
         <div style={{ flexDirection: 'column' }}>
           <h2>Listagens:</h2>
-          <button onClick={() => setMenu('modal-lista-acessos')} className='botoes-modals-admin-2'>Acessos</button>
-          <button onClick={() => setMenu('modal-lista-usuarios')} className='botoes-modals-admin-2'>Usuários</button>
-          <button onClick={() => {setMenu('modal-lista-veiculos'); console.log(vehicleData)}} className='botoes-modals-admin-2'>Veículos</button>
+          <button onClick={() => { setMenu('modal-lista-acessos'); console.log(accessData) }} className='botoes-modals-admin-2'>Acessos</button>
+          <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
+          <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
           <button onClick={() => setMenu('modal-lista-vagas')} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
         </div>
       </div>
