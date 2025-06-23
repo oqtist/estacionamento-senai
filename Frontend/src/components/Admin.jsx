@@ -14,40 +14,15 @@ function Admin() {
 
   const [userData, setUserData] = useState([])
   const [vehicleData, setVehicleData] = useState([])
-  const [accessData, setAccessData] = useState({})
+  const [accessData, setAccessData] = useState([])
+  const [vagasData, setVagasData] = useState([])
 
   useEffect(() => {
     fetchAcessos()
     fetchUsers()
     fetchVeiculos()
+    fetchVagas()
   }, [])
-
-  async function getInfoUser(id_usuario) {
-    try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/info/', { id_usuario }, {
-        headers: {
-          Authorization: token
-        }
-      })
-      console.log(response)
-    } catch (err) {
-      alert(err.response.data)
-      console.log(err)
-    }
-  }
-
-  async function getVehicleInfo(id_veiculo) {
-    try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/info/', { id_veiculo }, {
-        headers: {
-          Authorization: token
-        }
-      })
-      console.log(response)
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   async function alterarQuantia() {
     try {
@@ -61,6 +36,20 @@ function Admin() {
       alert(`Quantia de vagas alterada para ${quantia}.`)
       setMenu('no-modal')
     } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async function fetchVagas() {
+    try {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/vagas/', {
+        headers: {
+          Authorization: token
+        }
+      })
+      setVagasData(response.data)
+    }
+    catch (err) {
       console.log(err)
     }
   }
@@ -115,7 +104,6 @@ function Admin() {
             <h1 style={{ fontSize: '30pt' }}>Especifique a quantia de vagas disponíveis:</h1>
             <input type="number" onInput={(e) => {
               setQuantia(Number(e.target.value))
-              console.log(quantia)
             }} placeholder='' />
             <div className='div-botoes-modals'>
               <button className='botoes-modals' onClick={() => alterarQuantia()}>Modificar</button>
@@ -163,14 +151,38 @@ function Admin() {
                   <th>Cor</th>
                 </tr>
                 {vehicleData.listaVeiculos?.map((i) => {
-                  getInfoUser(i.id_usuario)
+                  const usuario = getInfoUser(i.id_usuario)
                   return <>
                     <tr>
-                      <td>{ }</td>
+                      <td></td>
                       <td>{i.placa}</td>
                       <td>{i.modelo}</td>
                       <td>{i.cor}</td>
                     </tr>
+                  </>
+                })}
+              </table>
+            </div>
+            <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2rem' }} className='botoes-modals'>Voltar</button>
+          </div>
+          <div id='div-listagem-vagas' className='modals' style={menu == 'modal-lista-vagas' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
+            <h3 className='listagem-admin-titulo'>
+              Vagas Atualmente Ocupadas
+            </h3>
+            <div className='listagem-admin'>
+              <table>
+                <tr>
+                  <th>Usuário</th>
+                  <th>Veículo</th>
+                  <th>Data de Entrada</th>
+                </tr>
+                {vagasData?.vagasOcupadas?.rows?.map((i) => {
+                  return <>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{i.data_entrada}</td>
+                  </tr>
                   </>
                 })}
               </table>
@@ -219,11 +231,10 @@ function Admin() {
         <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
         <div style={{ flexDirection: 'column' }}>
           <h2>Listagens:</h2>
-          <button onClick={() => {
-            setMenu('modal-lista-acessos')
-          }} className='botoes-modals-admin-2'>Acessos</button>
-          <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
-          <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
+          <button onClick={() => setMenu('modal-lista-acessos')} className='botoes-modals-admin-2'>Acessos</button>
+          <button onClick={() => setMenu('modal-lista-usuarios')} className='botoes-modals-admin-2'>Usuários</button>
+          <button onClick={() => setMenu('modal-lista-veiculos')} className='botoes-modals-admin-2'>Veículos</button>
+          <button onClick={() => {setMenu('modal-lista-vagas'); console.log(vagasData)}} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
         </div>
       </div>
     </>
