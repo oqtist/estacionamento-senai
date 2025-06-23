@@ -3,6 +3,7 @@ import '../styles/Admin.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect } from 'react'
+import { infoGetter } from '../../../Backend/controllers/admin'
 
 function Admin() {
 
@@ -21,6 +22,19 @@ function Admin() {
     fetchUsers()
     fetchVeiculos()
   }, [])
+
+  async function getInfo(idParam) {
+    try {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/info/', { idParam }, {
+        headers: {
+          Authorization: token
+        }
+      })
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   async function alterarQuantia() {
     try {
@@ -117,7 +131,7 @@ function Admin() {
                 })}
               </table>
             </div>
-            <button onClick={() => setMenu('no-modal')} style={{marginTop: '2rem'}} className='botoes-modals'>Voltar</button>
+            <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2rem' }} className='botoes-modals'>Voltar</button>
           </div>
           <div id='div-listagem-veiculos' className='modals' style={menu == 'modal-lista-veiculos' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h3 className='listagem-admin-titulo'>
@@ -126,11 +140,14 @@ function Admin() {
             <div className='listagem-admin'>
               <table>
                 <tr>
+                  <th>Usuário</th>
+                  <th>Placa</th>
                   <th>Modelo</th>
                   <th>Cor</th>
-                  <th>Placa</th>
                 </tr>
                 {vehicleData.listaVeiculos?.map((i) => {
+                  infoGetter(i.id_usuario)
+
                   return <>
                     <tr>
                       <td>{i.modelo}</td>
@@ -141,7 +158,7 @@ function Admin() {
                 })}
               </table>
             </div>
-            <button onClick={() => setMenu('no-modal')} style={{marginTop: '2rem'}} className='botoes-modals'>Voltar</button>
+            <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2rem' }} className='botoes-modals'>Voltar</button>
           </div>
           <div id='div-listagem-usuarios' className='modals' style={menu == 'modal-lista-usuarios' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h3 className='listagem-admin-titulo'>
@@ -165,7 +182,7 @@ function Admin() {
                 })}
               </table>
             </div>
-            <button onClick={() => setMenu('no-modal')} style={{marginTop: '2rem'}} className='botoes-modals'>Voltar</button>
+            <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2rem' }} className='botoes-modals'>Voltar</button>
           </div>
         </div>
       </div>
@@ -185,9 +202,12 @@ function Admin() {
         <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
         <div style={{ flexDirection: 'column' }}>
           <h2>Listagens:</h2>
-          <button onClick={() => { setMenu('modal-lista-acessos'); console.log(accessData) }} className='botoes-modals-admin-2'>Acessos</button>
-          <button onClick={() => { setMenu('modal-lista-usuarios'); console.log(userData) }} className='botoes-modals-admin-2'>Usuários</button>
-          <button onClick={() => { setMenu('modal-lista-veiculos'); console.log(vehicleData) }} className='botoes-modals-admin-2'>Veículos</button>
+          <button onClick={() => {
+            setMenu('modal-lista-acessos')
+            getInfo()
+          }} className='botoes-modals-admin-2'>Acessos</button>
+          <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
+          <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
         </div>
       </div>
     </>
