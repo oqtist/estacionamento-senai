@@ -96,8 +96,8 @@ function Home() {
   }
 
   function tokenRefresh() {
-    const tokenDecode = jwtDecode(token)
     localStorage.getItem('token')
+    const tokenDecode = jwtDecode(token)
     setTokenDecodificado(tokenDecode)
   }
 

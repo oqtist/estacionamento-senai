@@ -41,3 +41,22 @@ export const listarVeiculos = async (req, res) => {
         console.log(err)
     }
 }
+
+export const infoGetter = async (req, res) => {
+    try {
+        const { id_veiculo, id_usuario } = req.body
+        if (id_veiculo) {
+            const dadosVeiculo = Veiculos.findByPk(id_veiculo)
+            res.status(200).send(dadosVeiculo)
+            return
+        }
+        if (id_usuario) {
+            const dadosUsuario = Usuario.findByPk(id_usuario)
+            res.status(200).send(dadosUsuario)
+            return
+        }
+        res.status(500).send('Erro ao recuperar informação.')
+    } catch (err) {
+        console.log(err)
+    }
+}
