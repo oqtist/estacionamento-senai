@@ -42,15 +42,28 @@ export const listarVeiculos = async (req, res) => {
     }
 }
 
+export const listarVagasOcupadas = async (req, res) => {
+    try {
+        const vagasOcupadas = await Acessos.findAndCountAll({ where: { data_saida: null } })
+        if (!vagasOcupadas) {
+            res.status(400).send({ mensagem: 'Nenhuma vaga ocupada.' })
+            return
+        }
+        res.status(200).send({ vagasOcupadas })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export const infoGetter = async (req, res) => {
     try {
         const { id_veiculo, id_usuario } = req.body
         if (id_veiculo) {
-            const dadosVeiculo = Veiculos.findByPk(id_veiculo)
+            const dadosVeiculo = await Veiculos.findByPk(id_veiculo)
             res.status(200).send(dadosVeiculo)
         }
         if (id_usuario) {
-            const dadosUsuario = Usuario.findByPk(id_usuario)
+            const dadosUsuario = await Usuario.findByPk(id_usuario)
             res.status(200).send(dadosUsuario)
         }
     } catch (err) {

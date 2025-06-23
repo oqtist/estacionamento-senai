@@ -31,24 +31,25 @@ function Home() {
     }
   }, [])
 
-  async function registrarEntrada() {
+  async function registrarEntrada(idVeiculo) {
     try {
-      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/entrada/${idVeiculoSelecionado}`, {}, {
+      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/entrada/${idVeiculo}`, {}, {
         headers: {
           Authorization: token
         }
       })
       fetchData()
       alert('Entrada registrada!')
+      console.log(response)
     } catch (err) {
-      alert(err)
+      alert(err.response.data.mensagem)
       console.log(err)
     }
   }
 
-  async function registrarSaida() {
+  async function registrarSaida(idVeiculo) {
     try {
-      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/saida/${idVeiculoSelecionado}`, {}, {
+      const response = await axios.post(`https://estacionamento-senai.onrender.com/acesso/saida/${idVeiculo}`, {}, {
         headers: {
           Authorization: token
         }
@@ -56,7 +57,7 @@ function Home() {
       fetchData()
       alert('Saída registrada!')
     } catch (err) {
-      alert(err)
+      alert(err.response.data.mensagem)
       console.log(err)
     }
   }
@@ -207,13 +208,11 @@ function Home() {
                     setMenu('modal-alterar-veiculo')
                   }}>✎</button>
                   {i.status_vaga ? <button onClick={() => {
-                    setIdVeiculoSelecionado(i.id_veiculo)
-                    registrarSaida()
+                    registrarSaida(i.id_veiculo)
                   }} className='botoes-acesso'>
                     Registrar Saída
                   </button> : <button onClick={() => {
-                    setIdVeiculoSelecionado(i.id_veiculo)
-                    registrarEntrada()
+                    registrarEntrada(i.id_veiculo)
                   }
                   } className='botoes-acesso'>Registrar Entrada</button>}
                   <button className='botao-fechar' onClick={() => {

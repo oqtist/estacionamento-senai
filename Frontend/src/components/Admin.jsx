@@ -22,25 +22,28 @@ function Admin() {
     fetchVeiculos()
   }, [])
 
-  async function getInfoUser(idParam) {
+  async function getInfoUser(id_usuario) {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/info/', { id_usuario: idParam }, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/info/', { id_usuario }, {
         headers: {
           Authorization: token
         }
       })
+      console.log(response)
     } catch (err) {
+      alert(err.response.data)
       console.log(err)
     }
   }
 
-    async function getVehicleInfo(idParam) {
+  async function getVehicleInfo(id_veiculo) {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/info/', { id_veiculo: idParam }, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/info/', { id_veiculo }, {
         headers: {
           Authorization: token
         }
       })
+      console.log(response)
     } catch (err) {
       console.log(err)
     }
@@ -163,7 +166,7 @@ function Admin() {
                   getInfoUser(i.id_usuario)
                   return <>
                     <tr>
-                      <td>{}</td>
+                      <td>{ }</td>
                       <td>{i.placa}</td>
                       <td>{i.modelo}</td>
                       <td>{i.cor}</td>
