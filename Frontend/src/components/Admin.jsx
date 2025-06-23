@@ -17,6 +17,8 @@ function Admin() {
   const [accessData, setAccessData] = useState([])
   const [vagasData, setVagasData] = useState([])
 
+  const quantiaTotal = localStorage.getItem('quantiaTotal')
+
   useEffect(() => {
     fetchAcessos()
     fetchUsers()
@@ -35,7 +37,9 @@ function Admin() {
       })
       alert(`Quantia de vagas alterada para ${quantia}.`)
       setMenu('no-modal')
+      localStorage.setItem('quantiaTotal', quantia)
     } catch (err) {
+      alert(err.response.data.mensagem)
       console.log(err)
     }
   }
@@ -76,7 +80,6 @@ function Admin() {
         }
       })
       setAccessData(response.data)
-      console.log(response)
     }
     catch (err) {
       alert(err.response.data.mensagem)
@@ -131,10 +134,11 @@ function Admin() {
               <table>
                 <thead>
                   <tr>
-                    <th>Veículo</th>
-                    <th>Usuário</th>
-                    <th>Data de Entrada</th>
-                    <th>Data de Saída</th>
+                    <th><p>Veículo</p></th>
+                    <th><p>Usuário</p></th>
+                    <th><p>Placa</p></th>
+                    <th><p>Data de Entrada</p></th>
+                    <th><p>Data de Saída</p></th>
                   </tr>
                 </thead>
                 {accessData.listaAcessos?.map((i) => {
@@ -147,6 +151,7 @@ function Admin() {
                       <tr>
                         <td>{i.veiculo.modelo}</td>
                         <td>{i.usuario.nome}</td>
+                        <td>{i.veiculo.placa}</td>
                         <td>{dataEntradaConvertida}</td>
                         <td>{dataSaidaConvertida ? dataSaidaConvertida : '-'}</td>
                       </tr>
@@ -163,20 +168,24 @@ function Admin() {
             </h3>
             <div className='listagem-admin'>
               <table>
-                <tr>
-                  <th>Usuário</th>
-                  <th>Placa</th>
-                  <th>Modelo</th>
-                  <th>Cor</th>
-                </tr>
+                <thead>
+                  <tr>
+                    <th><p>Usuário</p></th>
+                    <th><p>Placa</p></th>
+                    <th><p>Modelo</p></th>
+                    <th><p>Cor</p></th>
+                  </tr>
+                </thead>
                 {vehicleData?.map((i) => {
                   return <>
-                    <tr>
-                      <td>{i.usuario.nome}</td>
-                      <td>{i.placa}</td>
-                      <td>{i.modelo}</td>
-                      <td>{i.cor}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td>{i.usuario.nome}</td>
+                        <td>{i.placa}</td>
+                        <td>{i.modelo}</td>
+                        <td>{i.cor}</td>
+                      </tr>
+                    </tbody>
                   </>
                 })}
               </table>
@@ -189,19 +198,23 @@ function Admin() {
             </h3>
             <div className='listagem-admin'>
               <table>
-                <tr>
-                  <th>Usuário</th>
-                  <th>Veículo</th>
-                  <th>Data de Entrada</th>
-                </tr>
+                <thead>
+                  <tr>
+                    <th><p>Usuário</p></th>
+                    <th><p>Veículo</p></th>
+                    <th><p>Data de Entrada</p></th>
+                  </tr>
+                </thead>
                 {vagasData?.acessos?.map((i) => {
                   const dataUTC = new Date(i.data_entrada)
                   return <>
-                    <tr>
-                      <td>{i.usuario.nome}</td>
-                      <td>{i.veiculo.modelo} ({i.veiculo.cor})</td>
-                      <td>{formatadorData.format(dataUTC)}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td>{i.usuario.nome}</td>
+                        <td>{i.veiculo.modelo} ({i.veiculo.cor})</td>
+                        <td>{formatadorData.format(dataUTC)}</td>
+                      </tr>
+                    </tbody>
                   </>
                 })}
               </table>
@@ -214,18 +227,22 @@ function Admin() {
             </h3>
             <div className='listagem-admin'>
               <table>
-                <tr>
-                  <th>Nome</th>
-                  <th>E-mail</th>
-                  <th>Tipo</th>
-                </tr>
+                <thead>
+                  <tr>
+                    <th><p>Nome</p></th>
+                    <th><p>E-mail</p></th>
+                    <th><p>Tipo</p></th>
+                  </tr>
+                </thead>
                 {userData.listaUsuarios?.map((i) => {
                   return <>
-                    <tr>
-                      <td>{i.nome}</td>
-                      <td>{i.email}</td>
-                      <td>{i.tipo}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td>{i.nome}</td>
+                        <td>{i.email}</td>
+                        <td>{i.tipo}</td>
+                      </tr>
+                    </tbody>
                   </>
                 })}
               </table>
@@ -247,13 +264,16 @@ function Admin() {
         <a id='inv-puller'>▼</a>
       </div>
       <div id='modal-admin-main' style={{ flexDirection: 'row' }}>
-        <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <h2>{vagasData.contagemOcupadas} / {quantiaTotal} vagas ocupadas.</h2>
+          <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
+        </div>
         <div style={{ flexDirection: 'column' }}>
           <h2>Listagens:</h2>
           <button onClick={() => { setMenu('modal-lista-acessos') }} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
           <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
-          <button onClick={() => { setMenu('modal-lista-vagas') }} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
+          <button onClick={() => { setMenu('modal-lista-vagas')}} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
         </div>
       </div>
     </>

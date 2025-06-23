@@ -37,7 +37,7 @@ header::before {
   position: absolute;
   display: flex;
   left: 0;
-  top: 2rem;
+  top: 3rem;
   z-index: 1;
   font-size: 20pt;
   transition: top ease-in 500ms;
