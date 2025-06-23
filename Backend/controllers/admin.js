@@ -51,7 +51,11 @@ export const listarVagasOcupadas = async (req, res) => {
         const { count, rows } = await Acessos.findAndCountAll({
             where: {
                 data_saida: null
-            }
+            },
+            include: [
+                { model: Usuario },
+                { model: Veiculos }
+            ]
         })
         if (count == 0) {
             res.status(400).send({ mensagem: 'Nenhuma vaga ocupada.' })

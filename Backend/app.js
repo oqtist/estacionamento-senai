@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(routerUser, routerVeiculos, routerAcesso, routerAdmin)
 
 try {
-    await database.sync({ force: true })
+    await database.sync({ alter: true })
 } catch (err) {
     console.log(err)
 }

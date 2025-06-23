@@ -92,6 +92,7 @@ function Admin() {
       setVehicleData(response.data)
     }
     catch (err) {
+      alert(err.response.data.mensagem)
       console.log(err)
     }
   }
@@ -150,11 +151,10 @@ function Admin() {
                   <th>Modelo</th>
                   <th>Cor</th>
                 </tr>
-                {vehicleData.listaVeiculos?.map((i) => {
-                  const usuario = getInfoUser(i.id_usuario)
+                {vehicleData?.map((i) => {
                   return <>
                     <tr>
-                      <td></td>
+                      <td>{i.usuario.nome}</td>
                       <td>{i.placa}</td>
                       <td>{i.modelo}</td>
                       <td>{i.cor}</td>

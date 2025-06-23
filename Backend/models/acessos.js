@@ -1,7 +1,5 @@
 import { database } from "../database.js";
 import { DataTypes, Sequelize } from "sequelize";
-import { Veiculos } from "./veiculos.js";
-import { Usuario } from "./users.js";
 
 const Acessos = database.define(
     'acessos',
