@@ -13,6 +13,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  input {
+    background-color: white;
+    color: black;
+  }
+
   a {
     font-weight: 500;
     color: #646cff;
@@ -29,6 +34,7 @@
     min-height: 100vh;
     width: 100vw;
     height: 100%;
+    padding: 2%;
     background: linear-gradient(to bottom right, #74b8fcb7, 57%, #0045ac),
       radial-gradient(ellipse at bottom left, white, #74b8fcb7);
     background-blend-mode: overlay;

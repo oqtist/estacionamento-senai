@@ -46,9 +46,9 @@ button {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  padding-block: 4%;
+  padding-block: 1%;
   padding-inline: 3%;
-  top: 50%;
+  top: 25rem;
   left: 50%;
   transform: translate(-50%, -50%);
   background:

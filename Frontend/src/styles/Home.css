@@ -229,6 +229,8 @@ body {
   background: linear-gradient(to bottom right, #74b8fcb7, 57%, #0045ac),
     radial-gradient(ellipse at bottom left, white, #74b8fcb7);
   background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .botoes-acesso {
