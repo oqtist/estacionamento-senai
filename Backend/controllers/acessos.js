@@ -25,7 +25,7 @@ export const registrarEntrada = async (req, res) => {
     try {
         const id = req.params.id
 
-        const userCheck = res.locals.user
+        const userCheck = await res.locals.user
         const veiculoCheck = await Veiculos.findByPk(id)
         const acessoCheck = await Acessos.findOne({ where: { id_veiculo: veiculoCheck.dataValues.id_veiculo, data_saida: null } })
         const vagasOcupadas = await Acessos.findAndCountAll({ where: { data_saida: null } })
