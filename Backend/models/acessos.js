@@ -1,6 +1,7 @@
 import { database } from "../database.js";
 import { DataTypes, Sequelize } from "sequelize";
 import { Veiculos } from "./veiculos.js";
+import { Usuario } from "./users.js";
 
 const Acessos = database.define(
     'acessos',
@@ -22,6 +23,14 @@ const Acessos = database.define(
     schema: 'estacionamento',
     freezeTableName: true,
     timestamps: false
+})
+
+Acessos.belongsTo(Veiculos, {
+    foreignKey: 'id_veiculo'
+})
+
+Acessos.belongsTo(Usuario, {
+    foreignKey: 'id_usuario'
 })
 
 export { Acessos }

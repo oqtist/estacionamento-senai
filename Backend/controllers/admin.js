@@ -43,7 +43,11 @@ export const listarVeiculos = async (req, res) => {
 
 export const listarVagasOcupadas = async (req, res) => {
     try {
-        const { count, rows } = await Acessos.findAndCountAll({ where: { data_saida: null } })
+        const { count, rows } = await Acessos.findAndCountAll({
+            where: {
+                data_saida: null
+            }
+        })
         if (count == 0) {
             res.status(400).send({ mensagem: 'Nenhuma vaga ocupada.' })
             return

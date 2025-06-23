@@ -233,8 +233,8 @@ function Admin() {
           <h2>Listagens:</h2>
           <button onClick={() => setMenu('modal-lista-acessos')} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => setMenu('modal-lista-usuarios')} className='botoes-modals-admin-2'>Usuários</button>
-          <button onClick={() => setMenu('modal-lista-veiculos')} className='botoes-modals-admin-2'>Veículos</button>
-          <button onClick={() => {setMenu('modal-lista-vagas'); console.log(vagasData)}} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
+          <button onClick={() => {setMenu('modal-lista-veiculos'); console.log(vehicleData)}} className='botoes-modals-admin-2'>Veículos</button>
+          <button onClick={() => setMenu('modal-lista-vagas')} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
         </div>
       </div>
     </>

@@ -49,4 +49,11 @@ Veiculos.hasOne(Acessos, {
     }
 })
 
+Veiculos.belongsTo(Usuario, {
+    foreignKey: {
+        name: 'id_usuario',
+        allowNull: false
+    }
+})
+
 export { Veiculos }
