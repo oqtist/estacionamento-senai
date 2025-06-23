@@ -25,12 +25,4 @@ const Acessos = database.define(
     timestamps: false
 })
 
-Acessos.belongsTo(Veiculos, {
-    foreignKey: 'id_veiculo'
-})
-
-Acessos.belongsTo(Usuario, {
-    foreignKey: 'id_usuario'
-})
-
 export { Acessos }

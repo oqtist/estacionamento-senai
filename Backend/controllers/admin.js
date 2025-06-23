@@ -17,7 +17,12 @@ export const listarUsuarios = async (req, res) => {
 
 export const listarAcessos = async (req, res) => {
     try {
-        const listaAcessos = await Acessos.findAll({ include: [Usuario, Veiculos] })
+        const listaAcessos = await Acessos.findAll({
+            include: [
+                { model: Usuario },
+                { model: Veiculos }
+            ]
+        })
         if (listaAcessos.length == 0) {
             res.status(500).send({ mensagem: 'Nenhum acesso encontrado.' })
             return

@@ -36,24 +36,25 @@ const Veiculos = database.define(
 })
 
 Usuario.hasMany(Veiculos, {
-    foreignKey: {
-        allowNull: false,
-        name: 'id_usuario'
-    }
+  foreignKey: { name: 'id_usuario', allowNull: false }
 })
-
-Veiculos.hasOne(Acessos, {
-    foreignKey: {
-        allowNull: false,
-        name: 'id_veiculo'
-    }
+Usuario.hasMany(Acessos, {
+  foreignKey: { name: 'id_usuario', allowNull: false }
 })
 
 Veiculos.belongsTo(Usuario, {
-    foreignKey: {
-        name: 'id_usuario',
-        allowNull: false
-    }
+  foreignKey: { name: 'id_usuario', allowNull: false }
 })
+Veiculos.hasMany(Acessos, {
+  foreignKey: { name: 'id_veiculo', allowNull: false }
+})
+
+Acessos.belongsTo(Veiculos, {
+  foreignKey: { name: 'id_veiculo', allowNull: false }
+})
+Acessos.belongsTo(Usuario, {
+  foreignKey: { name: 'id_usuario', allowNull: false }
+})
+
 
 export { Veiculos }
