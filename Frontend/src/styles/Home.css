@@ -176,7 +176,7 @@ header::before {
   left: 50%;
   transform: translate(-50%, -50%);
   background:
-    linear-gradient(#ceffd665, 10%, #0e665428, 90%, rgba(171, 255, 189, 0.596));
+    linear-gradient(transparent, 10%, #0e665428, 90%, rgba(171, 255, 189, 0.596));
   border-radius: 5%;
   position: absolute;
 }
