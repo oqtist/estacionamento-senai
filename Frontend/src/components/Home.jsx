@@ -22,7 +22,6 @@ function Home() {
   function logout() {
     localStorage.removeItem('token')
     setTokenDecodificado(null)
-    window.location.reload()
   }
 
   useEffect(() => {
@@ -89,7 +88,8 @@ function Home() {
         }
       })
       alert('Veículo alterado!')
-      window.location.reload()
+      fetchData()
+      setMenu('no-modal')
     } catch (err) {
       console.log(err)
     }
@@ -130,7 +130,8 @@ function Home() {
         }
       })
       alert('Veículo apagado!')
-      window.location.reload()
+      setMenu('no-modal')
+      fetchData()
     }
     catch (err) {
       alert("Algo deu errado. Tente novamente.")

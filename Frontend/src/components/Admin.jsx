@@ -3,7 +3,6 @@ import '../styles/Admin.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect } from 'react'
-import { infoGetter } from '../../../Backend/controllers/admin'
 
 function Admin() {
 
@@ -23,14 +22,25 @@ function Admin() {
     fetchVeiculos()
   }, [])
 
-  async function getInfo(idParam) {
+  async function getInfoUser(idParam) {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/info/', { idParam }, {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/info/', { id_usuario: idParam }, {
         headers: {
           Authorization: token
         }
       })
-      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+    async function getVehicleInfo(idParam) {
+    try {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/info/', { id_veiculo: idParam }, {
+        headers: {
+          Authorization: token
+        }
+      })
     } catch (err) {
       console.log(err)
     }
@@ -115,18 +125,22 @@ function Admin() {
             </h3>
             <div className='listagem-admin'>
               <table>
-                <tr>
-                  <th>Data de Entrada</th>
-                  <th>Data de Saída</th>
-                  <th>Veículo</th>
-                </tr>
+                <thead>
+                  <tr>
+                    <th>Data de Entrada</th>
+                    <th>Data de Saída</th>
+                    <th>Veículo</th>
+                  </tr>
+                </thead>
                 {accessData.listaAcessos?.map((i) => {
                   return <>
-                    <tr>
-                      <td>{i.data_entrada}</td>
-                      <td>{i.data_saida}</td>
-                      <td>{i.id_veiculo}</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <td>{i.data_entrada}</td>
+                        <td>{i.data_saida}</td>
+                        <td>{i.id_veiculo}</td>
+                      </tr>
+                    </tbody>
                   </>
                 })}
               </table>
@@ -146,13 +160,13 @@ function Admin() {
                   <th>Cor</th>
                 </tr>
                 {vehicleData.listaVeiculos?.map((i) => {
-                  infoGetter(i.id_usuario)
-
+                  getInfoUser(i.id_usuario)
                   return <>
                     <tr>
+                      <td>{}</td>
+                      <td>{i.placa}</td>
                       <td>{i.modelo}</td>
                       <td>{i.cor}</td>
-                      <td>{i.placa}</td>
                     </tr>
                   </>
                 })}
@@ -204,7 +218,6 @@ function Admin() {
           <h2>Listagens:</h2>
           <button onClick={() => {
             setMenu('modal-lista-acessos')
-            getInfo()
           }} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
           <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
