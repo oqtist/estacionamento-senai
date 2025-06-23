@@ -83,6 +83,7 @@ h2 {
 
 th {
   background-color: gray;
+  font-size: x-large;
 }
 
 tr:nth-child(even) {

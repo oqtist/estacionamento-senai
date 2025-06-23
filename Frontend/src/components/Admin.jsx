@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import '../styles/Admin.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { data, Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useEffect } from 'react'
 
@@ -76,6 +76,7 @@ function Admin() {
         }
       })
       setAccessData(response.data)
+      console.log(response)
     }
     catch (err) {
       alert(err.response.data.mensagem)
@@ -97,6 +98,16 @@ function Admin() {
       console.log(err)
     }
   }
+
+  const formatadorData = new Intl.DateTimeFormat('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
 
   return (
     <>
@@ -120,18 +131,24 @@ function Admin() {
               <table>
                 <thead>
                   <tr>
+                    <th>Veículo</th>
+                    <th>Usuário</th>
                     <th>Data de Entrada</th>
                     <th>Data de Saída</th>
-                    <th>Veículo</th>
                   </tr>
                 </thead>
                 {accessData.listaAcessos?.map((i) => {
+                  const dataEntradaUTC = new Date(i.data_entrada)
+                  const dataSaidaUTC = new Date(i.data_saida)
+                  const dataEntradaConvertida = formatadorData.format(dataEntradaUTC)
+                  const dataSaidaConvertida = i.data_saida ? formatadorData.format(dataSaidaUTC) : null
                   return <>
                     <tbody>
                       <tr>
-                        <td>{i.data_entrada}</td>
-                        <td>{i.data_saida}</td>
-                        <td>{i.id_veiculo}</td>
+                        <td>{i.veiculo.modelo}</td>
+                        <td>{i.usuario.nome}</td>
+                        <td>{dataEntradaConvertida}</td>
+                        <td>{dataSaidaConvertida ? dataSaidaConvertida : '-'}</td>
                       </tr>
                     </tbody>
                   </>
@@ -177,12 +194,13 @@ function Admin() {
                   <th>Veículo</th>
                   <th>Data de Entrada</th>
                 </tr>
-                {vagasData?.vagasOcupadas?.rows?.map((i) => {
+                {vagasData?.acessos?.map((i) => {
+                  const dataUTC = new Date(i.data_entrada)
                   return <>
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td>{i.data_entrada}</td>
+                      <td>{i.usuario.nome}</td>
+                      <td>{i.veiculo.modelo} ({i.veiculo.cor})</td>
+                      <td>{formatadorData.format(dataUTC)}</td>
                     </tr>
                   </>
                 })}
@@ -232,10 +250,10 @@ function Admin() {
         <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
         <div style={{ flexDirection: 'column' }}>
           <h2>Listagens:</h2>
-          <button onClick={() => { setMenu('modal-lista-acessos'); console.log(accessData) }} className='botoes-modals-admin-2'>Acessos</button>
+          <button onClick={() => { setMenu('modal-lista-acessos') }} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
           <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
-          <button onClick={() => setMenu('modal-lista-vagas')} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
+          <button onClick={() => { setMenu('modal-lista-vagas') }} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
         </div>
       </div>
     </>
