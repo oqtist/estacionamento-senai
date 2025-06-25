@@ -5,15 +5,15 @@ import { Usuario } from '../models/users.js'
 export const listarUsuarios = async (req, res) => {
     try {
         const pagina = Number(req.body.pagina) || 1
-        const limite = Number(req.body.limite) || 10
-        const offset = (pagina - 1) * limite
+        const limit = Number(req.body.limit) || 10
+        const offset = (pagina - 1) * limit
 
-        const { count, rows } = await Usuario.findAndCountAll({ offset, limite, order: [['nome', 'DESC']] })
+        const { count, rows } = await Usuario.findAndCountAll({ offset, limit, order: [['nome', 'DESC']] })
         if (count == 0) {
             res.status(500).send({ mensagem: 'Nenhum usuário encontrado.' })
             return
         }
-        res.status(200).send({ totalUsuarios: count, totalPaginas: Math.ceil(count / limite), paginaAtual: pagina, listarUsuarios: rows })
+        res.status(200).send({ totalUsuarios: count, totalPaginas: Math.ceil(count / limit), paginaAtual: pagina, listarUsuarios: rows })
     } catch (err) {
         console.log(err)
     }
@@ -22,11 +22,11 @@ export const listarUsuarios = async (req, res) => {
 export const listarAcessos = async (req, res) => {
     try {
         const pagina = Number(req.body.pagina) || 1
-        const limite = Number(req.body.limite) || 10
-        const offset = (pagina - 1) * limite
+        const limit = Number(req.body.limit) || 10
+        const offset = (pagina - 1) * limit
 
         const { count, rows } = await Acessos.findAndCountAll({
-            offset, limite, order: [['data_entrada', 'DESC']],
+            offset, limit, order: [['data_entrada', 'DESC']],
             include: [
                 { model: Usuario },
                 { model: Veiculos }
@@ -36,7 +36,7 @@ export const listarAcessos = async (req, res) => {
             res.status(500).send({ mensagem: 'Nenhum acesso encontrado.' })
             return
         }
-        res.status(200).send({ totalAcessos: count, totalPaginas: Math.ceil(count / limite), paginaAtual: pagina, listarAcessos: rows })
+        res.status(200).send({ totalAcessos: count, totalPaginas: Math.ceil(count / limit), paginaAtual: pagina, listarAcessos: rows })
     } catch (err) {
         console.log(err)
     }
@@ -45,15 +45,15 @@ export const listarAcessos = async (req, res) => {
 export const listarVeiculos = async (req, res) => {
     try {
         const pagina = Number(req.body.pagina) || 1
-        const limite = Number(req.body.limite) || 10
-        const offset = (pagina - 1) * limite
+        const limit = Number(req.body.limit) || 10
+        const offset = (pagina - 1) * limit
 
-        const { count, rows } = await Veiculos.findAndCountAll({ offset, limite, order: [['modelo', 'DESC']], include: Usuario })
+        const { count, rows } = await Veiculos.findAndCountAll({ offset, limit, order: [['modelo', 'DESC']], include: Usuario })
         if (count == 0) {
             res.status(500).send({ mensagem: 'Nenhum veículo encontrado.' })
             return
         }
-        res.status(200).send({ totalVeiculos: count, totalPaginas: Math.ceil(count / limite), paginaAtual: pagina, listarVeiculos: rows })
+        res.status(200).send({ totalVeiculos: count, totalPaginas: Math.ceil(count / limit), paginaAtual: pagina, listarVeiculos: rows })
     } catch (err) {
         console.log(err)
     }
@@ -62,11 +62,11 @@ export const listarVeiculos = async (req, res) => {
 export const listarVagasOcupadas = async (req, res) => {
     try {
         const pagina = Number(req.body.pagina) || 1
-        const limite = Number(req.body.limite) || 10
-        const offset = (pagina - 1) * limite
+        const limit = Number(req.body.limit) || 10
+        const offset = (pagina - 1) * limit
 
         const { count, rows } = await Acessos.findAndCountAll({
-            offset, limite, order: [['data_entrada', 'DESC']],
+            offset, limit, order: [['data_entrada', 'DESC']],
             where: {
                 data_saida: null
             },
@@ -82,7 +82,7 @@ export const listarVagasOcupadas = async (req, res) => {
         }
         res.status(200).send({
             totalVagasOcupadas: count,
-            totalPaginas: Math.ceil(count / limite),
+            totalPaginas: Math.ceil(count / limit),
             paginaAtual: pagina,
             listarVagasOcupadas: rows
         })
