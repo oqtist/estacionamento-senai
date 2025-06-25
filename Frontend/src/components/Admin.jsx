@@ -20,9 +20,6 @@ function Admin() {
   const quantiaTotal = localStorage.getItem('quantiaTotal')
 
   useEffect(() => {
-    fetchAcessos()
-    fetchUsers()
-    fetchVeiculos()
     fetchVagas()
   }, [])
 
@@ -46,12 +43,13 @@ function Admin() {
 
   async function fetchVagas() {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/vagas/', {
+      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/vagas/', {}, {
         headers: {
           Authorization: token
         }
       })
       setVagasData(response.data)
+      console.log(response)
     }
     catch (err) {
       console.log(err)
@@ -273,7 +271,7 @@ function Admin() {
           <button onClick={() => { setMenu('modal-lista-acessos') }} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
           <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
-          <button onClick={() => { setMenu('modal-lista-vagas')}} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
+          <button onClick={() => { setMenu('modal-lista-vagas') }} className='botoes-modals-admin-2'>Vagas Ocupadas</button>
         </div>
       </div>
     </>
