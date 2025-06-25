@@ -8,7 +8,7 @@ export const listarUsuarios = async (req, res) => {
         const limite = Number(req.body.limite) || 10
         const offset = (pagina - 1) * limite
 
-        const { count, rows } = await Usuario.findAndCountAll({ offset, limite, order: [['nome', DESC]] })
+        const { count, rows } = await Usuario.findAndCountAll({ offset, limite, order: [['nome', 'DESC']] })
         if (count == 0) {
             res.status(500).send({ mensagem: 'Nenhum usuário encontrado.' })
             return
@@ -26,7 +26,7 @@ export const listarAcessos = async (req, res) => {
         const offset = (pagina - 1) * limite
 
         const { count, rows } = await Acessos.findAndCountAll({
-            offset, limite, order: [['data_entrada', DESC]],
+            offset, limite, order: [['data_entrada', 'DESC']],
             include: [
                 { model: Usuario },
                 { model: Veiculos }
@@ -48,7 +48,7 @@ export const listarVeiculos = async (req, res) => {
         const limite = Number(req.body.limite) || 10
         const offset = (pagina - 1) * limite
 
-        const { count, rows } = await Veiculos.findAll({ offset, limite, order: [['modelo', DESC]], include: Usuario })
+        const { count, rows } = await Veiculos.findAll({ offset, limite, order: [['modelo', 'DESC']], include: Usuario })
         if (count == 0) {
             res.status(500).send({ mensagem: 'Nenhum veículo encontrado.' })
             return
@@ -66,7 +66,7 @@ export const listarVagasOcupadas = async (req, res) => {
         const offset = (pagina - 1) * limite
 
         const { count, rows } = await Acessos.findAndCountAll({
-            offset, limite, order: [['data_entrada', DESC]],
+            offset, limite, order: [['data_entrada', 'DESC']],
             where: {
                 data_saida: null
             },

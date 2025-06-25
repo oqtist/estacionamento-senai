@@ -43,7 +43,7 @@ function Admin() {
 
   async function fetchVagas() {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/vagas/', {}, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/vagas/', {}, {
         headers: {
           Authorization: token
         }
@@ -58,7 +58,7 @@ function Admin() {
 
   async function fetchUsers() {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/usuarios/', {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/usuarios/', {
         headers: {
           Authorization: token
         }
@@ -72,7 +72,7 @@ function Admin() {
 
   async function fetchAcessos() {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/acessos/', {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/acessos/', {
         headers: {
           Authorization: token
         }
@@ -87,7 +87,7 @@ function Admin() {
 
   async function fetchVeiculos() {
     try {
-      const response = await axios.get('https://estacionamento-senai.onrender.com/admin/veiculos/', {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/veiculos/', {
         headers: {
           Authorization: token
         }
