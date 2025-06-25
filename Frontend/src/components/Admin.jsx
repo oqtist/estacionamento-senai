@@ -20,7 +20,10 @@ function Admin() {
   const quantiaTotal = localStorage.getItem('quantiaTotal')
 
   useEffect(() => {
+    fetchAcessos()
+    fetchUsers()
     fetchVagas()
+    fetchVeiculos()
   }, [])
 
   async function alterarQuantia() {
@@ -41,24 +44,23 @@ function Admin() {
     }
   }
 
-  async function fetchVagas() {
+  async function fetchVagas(pagParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/vagas/', {}, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/vagas/', { pagina: pagParam }, {
         headers: {
           Authorization: token
         }
       })
       setVagasData(response.data)
-      console.log(response)
     }
     catch (err) {
       console.log(err)
     }
   }
 
-  async function fetchUsers() {
+  async function fetchUsers(pagParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/usuarios/', {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/usuarios/', { pagina: pagParam }, {
         headers: {
           Authorization: token
         }
@@ -70,9 +72,9 @@ function Admin() {
     }
   }
 
-  async function fetchAcessos() {
+  async function fetchAcessos(pagParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/acessos/', {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/acessos/', { pagina: pagParam }, {
         headers: {
           Authorization: token
         }
@@ -85,14 +87,15 @@ function Admin() {
     }
   }
 
-  async function fetchVeiculos() {
+  async function fetchVeiculos(pagParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/veiculos/', {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/veiculos/',{ pagina: pagParam }, {
         headers: {
           Authorization: token
         }
       })
       setVehicleData(response.data)
+      console.log('Vehicle Response: ', response)
     }
     catch (err) {
       alert(err.response.data.mensagem)
@@ -174,7 +177,7 @@ function Admin() {
                     <th><p>Cor</p></th>
                   </tr>
                 </thead>
-                {vehicleData?.map((i) => {
+                {/* {vehicleData?.map((i) => {
                   return <>
                     <tbody>
                       <tr>
@@ -185,7 +188,7 @@ function Admin() {
                       </tr>
                     </tbody>
                   </>
-                })}
+                })} */}
               </table>
             </div>
             <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2rem' }} className='botoes-modals'>Voltar</button>
@@ -203,7 +206,7 @@ function Admin() {
                     <th><p>Data de Entrada</p></th>
                   </tr>
                 </thead>
-                {vagasData?.acessos?.map((i) => {
+                {vagasData?.listarVagasOcupadas?.map((i) => {
                   const dataUTC = new Date(i.data_entrada)
                   return <>
                     <tbody>
@@ -217,7 +220,11 @@ function Admin() {
                 })}
               </table>
             </div>
-            <button onClick={() => setMenu('no-modal')} style={{ marginTop: '2rem' }} className='botoes-modals'>Voltar</button>
+            <div className='div-listagem-footer'>
+              <button onClick={() => fetchVagas()} className='botoes-modals-pag'>←</button>
+              <button onClick={() => setMenu('no-modal')} className='botoes-modals'>Voltar</button>
+              <button onClick={() => fetchVagas()} className='botoes-modals-pag'>→</button>
+            </div>
           </div>
           <div id='div-listagem-usuarios' className='modals' style={menu == 'modal-lista-usuarios' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h3 className='listagem-admin-titulo'>
@@ -232,7 +239,7 @@ function Admin() {
                     <th><p>Tipo</p></th>
                   </tr>
                 </thead>
-                {userData.listaUsuarios?.map((i) => {
+                {userData.listarUsuarios?.map((i) => {
                   return <>
                     <tbody>
                       <tr>
@@ -263,7 +270,7 @@ function Admin() {
       </div>
       <div id='modal-admin-main' style={{ flexDirection: 'row' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h2>{vagasData.contagemOcupadas} / {quantiaTotal} vagas ocupadas.</h2>
+          <h2>{vagasData.totalVagasOcupadas} / {quantiaTotal} vagas ocupadas.</h2>
           <button onClick={() => setMenu('modal-quantia-vagas')} className='botoes-modals-admin'>Quantia de Vagas</button>
         </div>
         <div style={{ flexDirection: 'column' }}>

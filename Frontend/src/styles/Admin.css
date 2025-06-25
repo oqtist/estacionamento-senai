@@ -108,3 +108,18 @@ th p {
   margin: 0;
   text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.678);
 }
+
+.div-listagem-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 35rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.botoes-modals-pag {
+  aspect-ratio: 1;
+  height: 3rem;
+  -webkit-text-stroke: transparent;
+}

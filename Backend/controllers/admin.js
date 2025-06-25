@@ -48,7 +48,7 @@ export const listarVeiculos = async (req, res) => {
         const limite = Number(req.body.limite) || 10
         const offset = (pagina - 1) * limite
 
-        const { count, rows } = await Veiculos.findAll({ offset, limite, order: [['modelo', 'DESC']], include: Usuario })
+        const { count, rows } = await Veiculos.findAndCountAll({ offset, limite, order: [['modelo', 'DESC']], include: Usuario })
         if (count == 0) {
             res.status(500).send({ mensagem: 'Nenhum veículo encontrado.' })
             return
