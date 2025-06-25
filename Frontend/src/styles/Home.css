@@ -37,7 +37,7 @@ header::before {
   position: absolute;
   display: flex;
   left: 0;
-  top: 2rem;
+  top: 3rem;
   z-index: 1;
   font-size: 20pt;
   transition: top ease-in 500ms;
@@ -176,7 +176,7 @@ header::before {
   left: 50%;
   transform: translate(-50%, -50%);
   background:
-    linear-gradient(#ceffd665, 10%, #0e665428, 90%, rgba(171, 255, 189, 0.596));
+    linear-gradient(transparent, 10%, #0e665428, 90%, rgba(171, 255, 189, 0.596));
   border-radius: 5%;
   position: absolute;
 }
@@ -229,6 +229,8 @@ body {
   background: linear-gradient(to bottom right, #74b8fcb7, 57%, #0045ac),
     radial-gradient(ellipse at bottom left, white, #74b8fcb7);
   background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .botoes-acesso {

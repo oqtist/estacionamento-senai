@@ -7,13 +7,21 @@ let QUANTIA_VAGAS
 export const alterarQuantiaVagas = async (req, res) => {
     try {
         const { quantia } = req.body
+        const { count, rows } = await Acessos.findAndCountAll({
+            where: {
+                data_saida: null
+            }
+        })
 
         if (isNaN(Number(quantia))) {
             res.status(400).send({ mensagem: 'Valor inválido. Tente novamente.' })
         }
+        if (Number(quantia) < count) {
+            res.status(400).send({ mensagem: 'Não é possível alterar o número de vagas para um valor menor que o de veículos estacionados. Use um valor maior.' })
+        }
         if (Number(quantia) >= 0) {
             QUANTIA_VAGAS = quantia
-            res.status(200).send({ mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}` })
+            res.status(200).send({ mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}`, vagasTotais: QUANTIA_VAGAS, vagasOcupadas: count })
         }
 
     } catch (err) {
