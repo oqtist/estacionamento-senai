@@ -16,7 +16,6 @@ function Login() {
       const response = await axios.post(`https://estacionamento-senai.onrender.com/login/`, {
         email, senha
       })
-      console.log(response)
       localStorage.setItem('token', response.data.token)
       navigate({
         pathname: "/"

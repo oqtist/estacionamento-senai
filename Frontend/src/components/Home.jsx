@@ -40,7 +40,6 @@ function Home() {
       })
       fetchData()
       alert('Entrada registrada!')
-      console.log(response)
     } catch (err) {
       alert(err.response.data.mensagem)
       console.log(err)
@@ -116,7 +115,6 @@ function Home() {
       })
       setVeiculos(response.data.veiculos)
       setUserData(userInfo)
-      console.log(userInfo)
     } catch (err) {
       alert(err)
       console.log(err)

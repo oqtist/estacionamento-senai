@@ -52,7 +52,6 @@ function Admin() {
         }
       })
       setVagasData(response.data)
-      console.log('Parking Data: ', response)
     }
     catch (err) {
       console.log(err)
@@ -67,7 +66,6 @@ function Admin() {
         }
       })
       setUserData(response.data)
-      console.log('User Response: ', response)
     }
     catch (err) {
       console.log(err)
@@ -82,7 +80,6 @@ function Admin() {
         }
       })
       setAccessData(response.data)
-      console.log('Access Response: ', response)
     }
     catch (err) {
       alert(err.response.data.mensagem)
@@ -98,7 +95,6 @@ function Admin() {
         }
       })
       setVehicleData(response.data)
-      console.log('Vehicle Response: ', response)
     }
     catch (err) {
       alert(err.response.data.mensagem)
@@ -297,7 +293,7 @@ function Admin() {
           <button onClick={() => { setMenu('modal-lista-acessos') }} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
           <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
-          {vagasData.length > 0 && <button onClick={() => { setMenu('modal-lista-vagas'); console.log(vagasData) }} className='botoes-modals-admin-2'>Vagas Ocupadas</button>}
+          {vagasData?.listarVagasOcupadas?.length > 0 && <button onClick={() => { setMenu('modal-lista-vagas'); console.log(vagasData)}} className='botoes-modals-admin-2'>Vagas Ocupadas</button>}
         </div>
       </div>
     </>
