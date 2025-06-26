@@ -44,9 +44,9 @@ function Admin() {
     }
   }
 
-  async function fetchVagas(pagParam) {
+  async function fetchVagas(pagParam, ordParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/vagas/', { pagina: pagParam }, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/vagas/', { pagina: pagParam, ordem: ordParam }, {
         headers: {
           Authorization: token
         }
@@ -58,9 +58,9 @@ function Admin() {
     }
   }
 
-  async function fetchUsers(pagParam) {
+  async function fetchUsers(pagParam, ordParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/usuarios/', { pagina: pagParam }, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/usuarios/', { pagina: pagParam, ordem: ordParam }, {
         headers: {
           Authorization: token
         }
@@ -72,9 +72,9 @@ function Admin() {
     }
   }
 
-  async function fetchAcessos(pagParam) {
+  async function fetchAcessos(pagParam, ordParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/acessos/', { pagina: pagParam }, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/acessos/', { pagina: pagParam, ordem: ordParam }, {
         headers: {
           Authorization: token
         }
@@ -87,9 +87,9 @@ function Admin() {
     }
   }
 
-  async function fetchVeiculos(pagParam) {
+  async function fetchVeiculos(pagParam, ordParam) {
     try {
-      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/veiculos/', { pagina: pagParam }, {
+      const response = await axios.post('https://estacionamento-senai.onrender.com/admin/veiculos/', { pagina: pagParam, ordem: ordParam }, {
         headers: {
           Authorization: token
         }
@@ -130,6 +130,7 @@ function Admin() {
             <h3 className='listagem-admin-titulo'>
               Log de Acessos
             </h3>
+            <p className='texto-misc'>Total de Acessos: {accessData.totalAcessos}</p>
             <div className='listagem-admin'>
               <table>
                 <thead>
@@ -149,7 +150,7 @@ function Admin() {
                   return <>
                     <tbody>
                       <tr>
-                        <td>{i.veiculo.modelo}</td>
+                        <td>{i.veiculo.modelo} ({i.veiculo.cor})</td>
                         <td>{i.usuario.nome}</td>
                         <td>{i.veiculo.placa}</td>
                         <td>{dataEntradaConvertida}</td>
@@ -162,15 +163,16 @@ function Admin() {
             </div>
             <p className='texto-misc'>Página {accessData.paginaAtual} / {accessData.totalPaginas}</p>
             <div className='div-listagem-footer'>
-              <button onClick={() => fetchAcessos((accessData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>
+              {accessData.totalPaginas > 1 && <button onClick={() => fetchAcessos((accessData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>}
               <button onClick={() => setMenu('no-modal')} className='botoes-modals'>Voltar</button>
-              <button onClick={() => fetchAcessos((accessData.paginaAtual + 1))} className='botoes-modals-pag'>→</button>
+              {accessData.totalPaginas > 1 && <button onClick={() => fetchAcessos((accessData.paginaAtual + 1))} className='botoes-modals-pag'>→</button>}
             </div>
           </div>
           <div id='div-listagem-veiculos' className='modals' style={menu == 'modal-lista-veiculos' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h3 className='listagem-admin-titulo'>
               Registro de Veículos
             </h3>
+            <p className='texto-misc'>Total de Veículos Registrados: {vehicleData.totalVeiculos}</p>
             <div className='listagem-admin'>
               <table>
                 <thead>
@@ -195,16 +197,16 @@ function Admin() {
                 })}
               </table>
             </div>
-            <p className='texto-misc'>Página </p>
+            {vehicleData.totalPaginas > 1 && <p className='texto-misc'>Página {vehicleData.paginaAtual} / {vehicleData.totalPaginas}</p>}
             <div className='div-listagem-footer'>
-              <button onClick={() => fetchVagas((vagasData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>
+              {vehicleData.totalPaginas > 1 && <button onClick={() => fetchVagas((vagasData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>}
               <button onClick={() => setMenu('no-modal')} className='botoes-modals'>Voltar</button>
-              <button onClick={() => fetchVagas((vagasData.paginaAtual + 1))} className='botoes-modals-pag'>→</button>
+              {vehicleData.totalPaginas > 1 && <button onClick={() => fetchVagas((vagasData.paginaAtual + 1))} className='botoes-modals-pag'>→</button>}
             </div>
           </div>
           <div id='div-listagem-vagas' className='modals' style={menu == 'modal-lista-vagas' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
-            <h3 className='listagem-admin-titulo'>
-              Vagas Atualmente Ocupadas
+            <h3 style={{ marginBlock: '1rem' }} className='listagem-admin-titulo'>
+              {vagasData.totalVagasOcupadas} Vagas Atualmente Ocupadas
             </h3>
             <div className='listagem-admin'>
               <table>
@@ -229,17 +231,18 @@ function Admin() {
                 })}
               </table>
             </div>
-            <p className='texto-misc'>Página {vagasData.paginaAtual} / {vagasData.totalPaginas}</p>
+            {vagasData.totalPaginas > 1 && <p className='texto-misc'>Página {vagasData.paginaAtual} / {vagasData.totalPaginas}</p>}
             <div className='div-listagem-footer'>
-              <button onClick={() => fetchVagas((vagasData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>
+              {vagasData.totalPaginas > 1 && <button onClick={() => fetchVagas((vagasData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>}
               <button onClick={() => setMenu('no-modal')} className='botoes-modals'>Voltar</button>
-              <button onClick={() => fetchVagas(vagasData.paginaAtual + 1)} className='botoes-modals-pag'>→</button>
+              {vagasData.totalPaginas > 1 && <button onClick={() => fetchVagas(vagasData.paginaAtual + 1)} className='botoes-modals-pag'>→</button>}
             </div>
           </div>
           <div id='div-listagem-usuarios' className='modals' style={menu == 'modal-lista-usuarios' ? { display: 'flex', opacity: '1', transition: '650ms' } : { pointerEvents: 'none', display: 'flex', opacity: '0', transition: '400ms' }}>
             <h3 className='listagem-admin-titulo'>
               Registro de Usuários
             </h3>
+            <p className='texto-misc'>{userData.totalUsuarios} Usuário Cadastrado(s)</p>
             <div className='listagem-admin'>
               <table>
                 <thead>
@@ -262,11 +265,11 @@ function Admin() {
                 })}
               </table>
             </div>
-            <p className='texto-misc'>Página {userData.paginaAtual} / {userData.totalPaginas}</p>
+            {userData.totalPaginas > 1 && <p className='texto-misc'>Página {userData.paginaAtual} / {userData.totalPaginas}</p>}
             <div className='div-listagem-footer'>
-              <button onClick={() => fetchVagas((userData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>
+              {userData.totalPaginas > 1 && <button onClick={() => fetchUsers((userData.paginaAtual - 1))} className='botoes-modals-pag'>←</button>}
               <button onClick={() => setMenu('no-modal')} className='botoes-modals'>Voltar</button>
-              <button onClick={() => fetchVagas((userData.paginaAtual + 1))} className='botoes-modals-pag'>→</button>
+              {userData.totalPaginas > 1 && <button onClick={() => fetchUsers((userData.paginaAtual + 1))} className='botoes-modals-pag'>→</button>}
             </div>
           </div>
         </div>
@@ -293,7 +296,7 @@ function Admin() {
           <button onClick={() => { setMenu('modal-lista-acessos') }} className='botoes-modals-admin-2'>Acessos</button>
           <button onClick={() => { setMenu('modal-lista-usuarios') }} className='botoes-modals-admin-2'>Usuários</button>
           <button onClick={() => { setMenu('modal-lista-veiculos') }} className='botoes-modals-admin-2'>Veículos</button>
-          {vagasData?.listarVagasOcupadas?.length > 0 && <button onClick={() => { setMenu('modal-lista-vagas'); console.log(vagasData)}} className='botoes-modals-admin-2'>Vagas Ocupadas</button>}
+          {vagasData?.listarVagasOcupadas?.length > 0 && <button onClick={() => { setMenu('modal-lista-vagas'); console.log(vagasData) }} className='botoes-modals-admin-2'>Vagas Ocupadas</button>}
         </div>
       </div>
     </>

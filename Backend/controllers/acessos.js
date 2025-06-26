@@ -88,3 +88,20 @@ export const registrarSaida = async (req, res) => {
         console.log(err)
     }
 }
+
+export const listarQuantiaVagas = async (req, res) => {
+    try {
+        const vagasCount = await Acessos.count({
+            where: {
+                data_saida: null
+            }
+        })
+        if (!vagasCount) {
+            res.status(400).send('Nenhuma vaga ocupada.')
+            return
+        }
+        res.status(200).send(vagasCount)
+    } catch (err) {
+        console.log(err)
+    }
+}

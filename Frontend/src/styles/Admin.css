@@ -48,7 +48,7 @@ button {
   align-items: center;
   padding-block: 1%;
   padding-inline: 3%;
-  top: 25rem;
+  top: 30rem;
   left: 50%;
   transform: translate(-50%, -50%);
   background:
@@ -79,6 +79,7 @@ h2 {
   text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.678);
   font-size: 27pt;
   font-weight: 300;
+  margin: 0;
 }
 
 th {
