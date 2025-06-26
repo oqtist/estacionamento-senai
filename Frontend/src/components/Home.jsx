@@ -113,6 +113,7 @@ function Home() {
           Authorization: token
         }
       })
+      const vagasQuantia = await 
       setVeiculos(response.data.veiculos)
       setUserData(userInfo)
     } catch (err) {

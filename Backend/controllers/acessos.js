@@ -100,7 +100,7 @@ export const listarQuantiaVagas = async (req, res) => {
             res.status(400).send('Nenhuma vaga ocupada.')
             return
         }
-        res.status(200).send(vagasCount)
+        res.status(200).send({vagasOcupadas: vagasCount, quantiaTotal: QUANTIA_VAGAS})
     } catch (err) {
         console.log(err)
     }
