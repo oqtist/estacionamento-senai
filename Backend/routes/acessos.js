@@ -1,6 +1,6 @@
 import express from 'express'
 const routerAcesso = express.Router()
-import { registrarEntrada, registrarSaida, alterarQuantiaVagas } from '../controllers/acessos.js'
+import { registrarEntrada, registrarSaida, alterarQuantiaVagas, listarQuantiaVagas} from '../controllers/acessos.js'
 import { verificarToken } from '../middleware/auth.js'
 import { verificarAdmin } from '../middleware/auth_admin.js'
 
