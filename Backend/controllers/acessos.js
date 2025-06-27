@@ -20,7 +20,7 @@ export const alterarQuantiaVagas = async (req, res) => {
             res.status(400).send({ mensagem: 'Não é possível alterar o número de vagas para um valor menor que o de veículos estacionados. Use um valor maior.' })
         }
         if(!getQuantiaRow) {
-            await Usuario.create({id_usuario: -1, nome: 'quantia_vagas', tipo: 'config', senha: Number(quantia)})
+            await Usuario.create({id_usuario: -1, nome: 'quantia_vagas', tipo: 'config', senha: Number(quantia), email: 'config'})
             return
         }
         if (Number(quantia) >= 0) {
