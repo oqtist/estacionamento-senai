@@ -1,12 +1,12 @@
 import { Acessos } from '../models/acessos.js'
 import { Veiculos } from '../models/veiculos.js'
+import { Usuario } from '../models/users.js'
 import { Sequelize } from 'sequelize'
-
-let QUANTIA_VAGAS
 
 export const alterarQuantiaVagas = async (req, res) => {
     try {
         const { quantia } = req.body
+        const getQuantiaRow = await Usuario.findByPk(-1)
         const { count, rows } = await Acessos.findAndCountAll({
             where: {
                 data_saida: null
@@ -19,9 +19,14 @@ export const alterarQuantiaVagas = async (req, res) => {
         if (Number(quantia) < count) {
             res.status(400).send({ mensagem: 'Não é possível alterar o número de vagas para um valor menor que o de veículos estacionados. Use um valor maior.' })
         }
+        if(!getQuantiaRow) {
+            await Usuario.create({id_usuario: -1, nome: 'quantia_vagas', tipo: 'config', senha: Number(quantia)})
+            return
+        }
         if (Number(quantia) >= 0) {
-            QUANTIA_VAGAS = quantia
-            res.status(200).send({ mensagem: `Quantia de vagas alterada para ${QUANTIA_VAGAS}`, vagasTotais: QUANTIA_VAGAS, vagasOcupadas: count })
+            getQuantiaRow.senha = Number(quantia)
+            await getQuantiaRow.save()
+            res.status(200).send({ mensagem: `Quantia de vagas alterada para ${Number(quantia)}`, vagasTotais: Number(quantia), vagasOcupadas: count })
         }
 
     } catch (err) {
@@ -96,11 +101,9 @@ export const listarQuantiaVagas = async (req, res) => {
                 data_saida: null
             }
         })
-        if (!vagasCount) {
-            res.status(400).send('Nenhuma vaga ocupada.')
-            return
-        }
-        res.status(200).send({vagasOcupadas: vagasCount, quantiaTotal: QUANTIA_VAGAS})
+        const quantiaTotal = await Usuario.findByPk(-1)
+
+        res.status(200).send({vagasOcupadas: vagasCount, quantiaTotal: quantiaTotal.senha})
     } catch (err) {
         console.log(err)
     }

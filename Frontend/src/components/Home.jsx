@@ -113,11 +113,10 @@ function Home() {
           Authorization: token
         }
       })
-      const vagasQuantia = await axios.get('https://estacionamento-senai.onrender.com/ace')
       setVeiculos(response.data.veiculos)
       setUserData(userInfo)
     } catch (err) {
-      alert(err)
+      alert(err.response.data.mensagem)
       console.log(err)
     }
   }
