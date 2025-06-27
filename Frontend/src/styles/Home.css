@@ -261,6 +261,9 @@ body {
   position: absolute;
   color: rgb(52, 112, 190);
   transform: translate(-50%, -50%);
+    animation:
+    1.75s ease-out opacityOFFVagasTexto forwards,
+    2.9s ease-in-out opacityONVagasTexto 5.5s forwards;
 }
 
 @keyframes slideINBoasVindas {
@@ -280,5 +283,25 @@ body {
 
   100% {
     transform: translateY(-150%);
+  }
+}
+
+@keyframes opacityOFFVagasTexto {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0%;
+  }
+}
+
+@keyframes opacityONVagasTexto {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
