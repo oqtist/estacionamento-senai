@@ -18,6 +18,7 @@ function Home() {
   const [cor, setCor] = useState()
 
   const [userData, setUserData] = useState([]) // ...
+  const [vagasData, setVagasData] = useState([])
 
   function logout() {
     localStorage.removeItem('token')
@@ -113,6 +114,13 @@ function Home() {
           Authorization: token
         }
       })
+      const vagasData = await axios.get('https://estacionamento-senai.onrender.com/acesso/listar-quantia-vagas/', {
+        headers: {
+          Authorization: token
+        }
+      })
+      console.log(vagasData)
+      setVagasData(vagasData.data)
       setVeiculos(response.data.veiculos)
       setUserData(userInfo)
     } catch (err) {
@@ -193,6 +201,7 @@ function Home() {
       {token ? (veiculos.length > 0 ?
         <div>
           <h3 id='texto-boas-vindas'>Boas-vindas, {userData.data.nome}!</h3>
+          <h3 id='texto-vagas'>{vagasData.vagasOcupadas} / {vagasData.quantiaTotal} vagas ocupadas.</h3>
           {veiculos.map((i, index) => {
             return <>
               <div className='div-cont-info'>

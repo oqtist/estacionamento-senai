@@ -19,8 +19,9 @@ export const alterarQuantiaVagas = async (req, res) => {
         if (Number(quantia) < count) {
             res.status(400).send({ mensagem: 'Não é possível alterar o número de vagas para um valor menor que o de veículos estacionados. Use um valor maior.' })
         }
-        if(!getQuantiaRow) {
-            await Usuario.create({id_usuario: -1, nome: 'quantia_vagas', tipo: 'config', senha: Number(quantia), email: 'config'})
+        if (!getQuantiaRow) {
+            await Usuario.create({ id_usuario: -1, nome: 'quantia_vagas', tipo: 'config', senha: Number(quantia), email: 'config' })
+            res.status(200).send({ mensagem: `Quantia de vagas alterada para ${Number(quantia)}`, vagasTotais: Number(quantia), vagasOcupadas: count })
             return
         }
         if (Number(quantia) >= 0) {
@@ -42,13 +43,14 @@ export const registrarEntrada = async (req, res) => {
         const veiculoCheck = await Veiculos.findByPk(id)
         const acessoCheck = await Acessos.findOne({ where: { id_veiculo: veiculoCheck.dataValues.id_veiculo, data_saida: null } })
         const vagasOcupadas = await Acessos.findAndCountAll({ where: { data_saida: null } })
+        const getQuantiaRow = await Usuario.findByPk(-1)
 
         if (acessoCheck) {
             res.status(500).send({ mensagem: 'Este veículo já está estacionado.' })
             return
         }
 
-        if (vagasOcupadas.count >= QUANTIA_VAGAS) {
+        if (vagasOcupadas.count >= getQuantiaRow.senha) {
             res.status(400).send({ mensagem: 'Não há vagas disponíveis no momento.' })
             return
         }
@@ -103,7 +105,7 @@ export const listarQuantiaVagas = async (req, res) => {
         })
         const quantiaTotal = await Usuario.findByPk(-1)
 
-        res.status(200).send({vagasOcupadas: vagasCount, quantiaTotal: quantiaTotal.senha})
+        res.status(200).send({ vagasOcupadas: vagasCount, quantiaTotal: quantiaTotal.senha })
     } catch (err) {
         console.log(err)
     }
