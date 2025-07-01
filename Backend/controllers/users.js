@@ -84,9 +84,10 @@ export const atualizarUsuario = async (req, res) => {
                     res.status(500).send('Senha antiga incorreta. Tente novamente.')
                     return
                 }
+                
+                const novaSenha = await bcrypt.hash(senha, saltRounds)
+                userCheck.senha = novaSenha
             }
-            const novaSenha = await bcrypt.hash(senha, saltRounds)
-            userCheck.senha = novaSenha
 
             if (nome || tipo || email || senha) {
                 await userCheck.save()
