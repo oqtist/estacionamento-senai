@@ -29,6 +29,8 @@ function Home() {
     if (token) {
       tokenRefresh()
       fetchData()
+    } else {
+      logout()
     }
   }, [])
 

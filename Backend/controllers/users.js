@@ -71,22 +71,22 @@ export const atualizarUsuario = async (req, res) => {
                 userCheck.email = email
             }
             if (senha || senhaOld) {
-                if(!senhaOld) {
+                if (!senhaOld) {
                     res.status(400).senha('A antiga senha não foi providenciada. Tente Novamente.')
                     return
                 }
-                if(!senha) {
+                if (!senha) {
                     res.status(400).senha('A nova senha não foi providenciada. Tente Novamente.')
                     return
                 }
-                bcrypt.compare(senhaOld, userCheck.dataValues.senha, function (err, result) {
-                    if (!result) {
-                        res.status(500).send('Senha antiga incorreta. Tente novamente.')
-                        return
-                    }
-                });
-            } 
-            userCheck.senha = await bcrypt.hash(senha, saltRounds)
+                const senhaMatch = bcrypt.compare(senhaOld, userCheck.dataValues.senha)
+                if (!senhaMatch) {
+                    res.status(500).send('Senha antiga incorreta. Tente novamente.')
+                    return
+                }
+            }
+            const novaSenha = await bcrypt.hash(senha, saltRounds)
+            userCheck.senha = novaSenha
 
             if (nome || tipo || email || senha) {
                 await userCheck.save()
