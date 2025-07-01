@@ -79,12 +79,12 @@ export const atualizarUsuario = async (req, res) => {
                     res.status(400).senha('A nova senha não foi providenciada. Tente Novamente.')
                     return
                 }
-                const senhaMatch = bcrypt.compare(senhaOld, userCheck.dataValues.senha)
+                const senhaMatch = await bcrypt.compare(senhaOld, userCheck.dataValues.senha)
                 if (!senhaMatch) {
                     res.status(500).send('Senha antiga incorreta. Tente novamente.')
                     return
                 }
-                
+
                 const novaSenha = await bcrypt.hash(senha, saltRounds)
                 userCheck.senha = novaSenha
             }
