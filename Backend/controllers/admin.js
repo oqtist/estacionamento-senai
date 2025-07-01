@@ -1,6 +1,7 @@
 import { Acessos } from '../models/acessos.js'
 import { Veiculos } from '../models/veiculos.js'
 import { Usuario } from '../models/users.js'
+import { Op } from 'sequelize'
 
 export const listarUsuarios = async (req, res) => {
     try {
@@ -8,7 +9,7 @@ export const listarUsuarios = async (req, res) => {
         const limit = Number(req.body.limit) || 10
         const offset = (pagina - 1) * limit
 
-        const { count, rows } = await Usuario.findAndCountAll({ offset, limit, order: [['nome', 'DESC']] })
+        const { count, rows } = await Usuario.findAndCountAll({ offset, limit, order: [['nome', 'DESC']], where: { [Op.not]: { id_usuario: -1 } } })
         if (count == 0) {
             res.status(500).send({ mensagem: 'Nenhum usuário encontrado.' })
             return
