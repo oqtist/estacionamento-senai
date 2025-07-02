@@ -17,7 +17,7 @@ function Admin() {
   const [accessData, setAccessData] = useState([])
   const [vagasData, setVagasData] = useState([])
 
-  const quantiaTotal = localStorage.getItem('quantiaTotal')
+  const [quantiaTotal, setQuantiaTotal] = useState()
 
   useEffect(() => {
     fetchAcessos()
@@ -37,7 +37,7 @@ function Admin() {
       })
       alert(`Quantia de vagas alterada para ${quantia}.`)
       setMenu('no-modal')
-      localStorage.setItem('quantiaTotal', quantia)
+      fetchVagas()
     } catch (err) {
       alert(err.response.data.mensagem)
       console.log(err)
@@ -51,7 +51,13 @@ function Admin() {
           Authorization: token
         }
       })
+      const quantiaVagasData = await axios.get('https://estacionamento-senai.onrender.com/acesso/listar-quantia-vagas/', {
+        headers: {
+          Authorization: token
+        }
+      })
       setVagasData(response.data)
+      setQuantiaTotal(quantiaVagasData.data.quantiaTotal)
     }
     catch (err) {
       console.log(err)

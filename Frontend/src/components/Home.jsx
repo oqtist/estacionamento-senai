@@ -121,7 +121,6 @@ function Home() {
           Authorization: token
         }
       })
-      console.log(vagasData)
       setVagasData(vagasData.data)
       setVeiculos(response.data.veiculos)
       setUserData(userInfo)

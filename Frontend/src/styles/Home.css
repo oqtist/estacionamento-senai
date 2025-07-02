@@ -254,7 +254,8 @@ body {
 }
 
 #texto-vagas {
-  top: 15%;
+  top: 10rem;
+  width: 50rem;
   left: 50%;
   font-weight: 200;
   font-size: 55pt;
